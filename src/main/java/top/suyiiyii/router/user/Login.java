@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import top.suyiiyii.schemas.Token;
+import top.suyiiyii.schemas.TokenData;
 
 import java.io.IOException;
 import java.util.Date;
@@ -30,23 +32,19 @@ public class Login extends HttpServlet {
         token.token_type = "Bearer";
 
         TokenData tokenData = new TokenData();
-        tokenData.uid = "1";
-        tokenData.role = "admin";
+        tokenData = top.suyiiyii.security.Login.login(request.username, request.password);
 
         token.access_token = JWT.create()
                 .withSubject(obj2Json(tokenData))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 3600))
                 .sign(Algorithm.HMAC256("secret"));
 
+        logger.info("签发token：" + token.access_token);
+
 
         respWrite(resp, token);
     }
 
-}
-
-class Token {
-    public String access_token;
-    public String token_type;
 }
 
 class LoginRequest {
@@ -55,8 +53,3 @@ class LoginRequest {
     public String password;
 }
 
-class TokenData {
-    public String uid;
-    public String role;
-
-}
