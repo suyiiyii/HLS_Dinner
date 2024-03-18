@@ -13,7 +13,16 @@ import java.io.IOException;
 public class HealthCheck extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Utils.respWrite(resp, "{\"status\":\"healthy\"}");
+        HealthCheckResponse healthCheckResponse = new HealthCheckResponse("heathy");
+        Utils.respWrite(resp, healthCheckResponse);
     }
 
+}
+
+class HealthCheckResponse {
+    public final String status;
+
+    public HealthCheckResponse(String status) {
+        this.status = status;
+    }
 }
