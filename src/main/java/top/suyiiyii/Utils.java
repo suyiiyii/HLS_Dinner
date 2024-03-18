@@ -5,7 +5,7 @@
  *
  * @auther Suyiiyii
  * @date 2023.3.18
- * @version 1.1
+ * @version 1.2
  */
 package top.suyiiyii;
 
@@ -18,6 +18,35 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Utils {
+
+    public static final ObjectMapper mapper = new ObjectMapper();
+
+    /**
+     * 把对象转换成json字符串
+     *
+     * @param object Object
+     * @return String
+     * @throws IOException IOException
+     */
+    public static String obj2Json(Object object) throws IOException {
+        return mapper.writeValueAsString(object);
+    }
+
+    /**
+     * 把json字符串转换成对象
+     *
+     * @param json      String
+     * @param valueType Class<T>
+     * @param <T>       T
+     * @return T
+     * @throws IOException IOException
+     */
+
+    public static <T> T json2Obj(String json, Class<T> valueType) throws IOException {
+        return mapper.readValue(json, valueType);
+    }
+
+
     /**
      * 读取请求体（json格式），返回字符串
      *
@@ -52,7 +81,6 @@ public class Utils {
             stringBuilder.append(line);
         }
         String str = stringBuilder.toString();
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(str, valueType);
     }
 
@@ -76,7 +104,6 @@ public class Utils {
         resp.setContentType("application/json");
         PrintWriter pw = resp.getWriter();
 
-        ObjectMapper mapper = new ObjectMapper();
         String jsonStr = mapper.writeValueAsString(object);
         pw.write(jsonStr);
         pw.flush();
