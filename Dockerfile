@@ -4,7 +4,7 @@ FROM tomcat:10-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # 将你的.war文件添加到Tomcat的webapps目录
-COPY /target/servlet103.war /usr/local/tomcat/webapps/ROOT.war
+COPY /target/HLS_Dinner.war /usr/local/tomcat/webapps/ROOT.war
 
 # 暴露8080端口
 EXPOSE 8080
