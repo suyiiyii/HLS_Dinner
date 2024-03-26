@@ -113,11 +113,7 @@ public class Session {
             checkUpdate();
         }
         // 提交事务
-        try {
-            sqlExecutor.getConn().commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sqlExecutor.commit();
     }
 
 
@@ -125,11 +121,7 @@ public class Session {
      * 回滚事务
      */
     public void rollback() {
-        try {
-            sqlExecutor.getConn().rollback();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sqlExecutor.rollback();
     }
 
 

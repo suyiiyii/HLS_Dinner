@@ -137,6 +137,23 @@ public class SqlExecutor {
         return resultSet;
     }
 
+    public void commit() {
+        try {
+            this.conn.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void rollback() {
+        try {
+            this.conn.rollback();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void close() {
         connectionManger.returnConnection(conn);
     }
