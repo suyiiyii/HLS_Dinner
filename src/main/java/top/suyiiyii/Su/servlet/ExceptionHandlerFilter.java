@@ -8,6 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.Su.WebUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -30,7 +32,11 @@ public class ExceptionHandlerFilter implements Filter {
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
-            logger.error("请求处理失败： " + e.getMessage());
+            // 将异常堆栈跟踪信息转换为换行符分隔的字符串
+            String stackTrace = Arrays.stream(e.getStackTrace())
+                    .map(StackTraceElement::toString)
+                    .collect(Collectors.joining("\n"));
+            logger.error("请求处理失败： " + stackTrace);
             HttpServletResponse resp = (HttpServletResponse) servletResponse;
             WebUtils.respWrite(resp, e.getMessage());
             resp.setStatus(500);
