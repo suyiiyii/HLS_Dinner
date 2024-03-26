@@ -31,7 +31,7 @@ public class ContextInitializer implements ServletContextListener {
 
         ConnectionBuilder builder = new ConnectionBuilder(url, user, password);
 
-        ModelManger modelManger = new ModelManger("top.suyiiyii.router.models", builder::getConnection);
+        ModelManger modelManger = new ModelManger("top.suyiiyii.models", builder::getConnection);
 
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("modelManger", modelManger);

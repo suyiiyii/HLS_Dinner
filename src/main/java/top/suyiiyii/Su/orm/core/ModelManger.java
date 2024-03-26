@@ -9,7 +9,6 @@ import top.suyiiyii.Su.orm.utils.SqlExecutor;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.Callable;
 
@@ -54,7 +53,7 @@ public class ModelManger {
     /**
      * 获取一个session（数据库会话，对应为唯一的Connection），开始数据库操作
      *
-     * @return
+     * @return session
      */
     public Session getSession() {
         return new Session(this);
@@ -67,7 +66,7 @@ public class ModelManger {
      * @param tableName   表名
      * @param entityClass 实体类
      */
-    private void register(String tableName, Class<?> entityClass) throws SQLException {
+    private void register(String tableName, Class<?> entityClass) {
         Table table = new Table(tableName, entityClass);
         class2TableName.put(entityClass, tableName);
         tableName2Class.put(tableName, entityClass);
@@ -88,7 +87,7 @@ public class ModelManger {
      * @param packageName 包名
      */
     private void scan(String packageName) {
-        logger.info("开始扫描");
+        logger.info("开始扫描" + packageName);
         try {
             // 获取当前线程的上下文类加载器
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
