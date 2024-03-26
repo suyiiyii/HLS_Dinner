@@ -1,0 +1,57 @@
+edition: 3.0.0
+name: fc3-example
+access: default
+resources:
+  fcDemo:
+    component: fc3
+    props:
+      region: cn-shenzhen
+      handler: index.handler
+      role: ''
+      description: ''
+      timeout: 15
+      diskSize: 512
+      internetAccess: true
+      logConfig:
+        enableRequestMetrics: true
+        enableInstanceMetrics: true
+        logBeginRule: DefaultRegex
+        project: aliyun-fc-cn-shenzhen-9e9de85a-9ae4-5304-ad8e-d903b9f56661
+        logstore: function-log
+      functionName: hls_dinner
+      runtime: custom-container
+      cpu: 0.35
+      customContainerConfig:
+        image: >-
+          registry-vpc.cn-shenzhen.aliyuncs.com/suyiiyii/servelt103:${env('DATETIME')}
+        port: 8080
+        healthCheckConfig:
+          failureThreshold: 120
+          httpGetUrl: /health_check
+          periodSeconds: 1
+          timeoutSeconds: 1
+          successThreshold: 1
+          initialDelaySeconds: 1
+      instanceConcurrency: 20
+      memorySize: 384
+#      environmentVariables:
+#        JDBC_URL: ${env('JDBC_URL')}
+#        JDBC_USER: ${env('JDBC_USER')}
+#        JDBC_PASSWORD: ${env('JDBC_PASSWORD')}
+#        url: ${env('jdbc_url')}
+#        user: ${env('jdbc_user')}
+#        password: ${env('jdbc_passwd')}
+      triggers:
+        - triggerConfig:
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            authType: anonymous
+            disableURLInternet: false
+          triggerName: defaultTrigger
+          description: ''
+          qualifier: LATEST
+          triggerType: http
