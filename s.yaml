@@ -34,13 +34,10 @@ resources:
           initialDelaySeconds: 1
       instanceConcurrency: 20
       memorySize: 384
-#      environmentVariables:
-#        JDBC_URL: ${env('JDBC_URL')}
-#        JDBC_USER: ${env('JDBC_USER')}
-#        JDBC_PASSWORD: ${env('JDBC_PASSWORD')}
-#        url: ${env('jdbc_url')}
-#        user: ${env('jdbc_user')}
-#        password: ${env('jdbc_passwd')}
+      environmentVariables:
+        JDBC_URL: ${env('JDBC_URL')}
+        JDBC_USER: ${env('JDBC_USER')}
+        JDBC_PASSWORD: ${env('JDBC_PASSWORD')}
       triggers:
         - triggerConfig:
             methods:
