@@ -4,6 +4,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.Su.ConfigManger;
 import top.suyiiyii.Su.orm.core.ModelManger;
 import top.suyiiyii.Su.orm.utils.ConnectionBuilder;
@@ -14,25 +16,26 @@ import top.suyiiyii.Su.orm.utils.ConnectionBuilder;
  */
 @WebListener
 public class ContextInitializer implements ServletContextListener {
+    Log logger = LogFactory.getLog(ContextInitializer.class);
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("Context Initialized");
+        logger.info("初始化依赖注入");
 
         ConfigManger configManger = new ConfigManger("application.properties");
-        String url = configManger.get("url");
-        String user = configManger.get("user");
-        String password = configManger.get("password");
-
-        System.out.println("url: " + url);
-        System.out.println("user: " + user);
-        System.out.println("password: " + password);
+        String url = configManger.get("JDBC_URL");
+        String user = configManger.get("JDBC_USER");
+        String password = configManger.get("JDBC_PASSWORD");
+        logger.info("JDBC_URL: " + url);
+        logger.info("JDBC_USER: " + user);
 
         ConnectionBuilder builder = new ConnectionBuilder(url, user, password);
 
-//        ModelManger modelManger = new ModelManger("top.suyiiyii.router.models", builder::getConnection);
+        ModelManger modelManger = new ModelManger("top.suyiiyii.router.models", builder::getConnection);
 
         ServletContext servletContext = sce.getServletContext();
-//        servletContext.setAttribute("modelManger", modelManger);
+        servletContext.setAttribute("modelManger", modelManger);
         servletContext.setAttribute("config", configManger);
+        logger.info("依赖注入完成");
     }
 }
