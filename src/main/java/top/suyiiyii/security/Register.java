@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.dao.UserTempImpl;
 import top.suyiiyii.dao.Users;
-import top.suyiiyii.schemas.User;
+import top.suyiiyii.models.User;
 
 import java.security.NoSuchAlgorithmException;
 

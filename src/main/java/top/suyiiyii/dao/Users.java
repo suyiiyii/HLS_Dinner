@@ -1,6 +1,6 @@
 package top.suyiiyii.dao;
 
-import top.suyiiyii.schemas.User;
+import top.suyiiyii.models.User;
 
 import java.util.NoSuchElementException;
 

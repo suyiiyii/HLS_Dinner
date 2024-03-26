@@ -6,7 +6,7 @@ import top.suyiiyii.dao.UserTempImpl;
 import top.suyiiyii.dao.Users;
 import top.suyiiyii.exception.UserAuthenticationException;
 import top.suyiiyii.schemas.TokenData;
-import top.suyiiyii.schemas.User;
+import top.suyiiyii.models.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

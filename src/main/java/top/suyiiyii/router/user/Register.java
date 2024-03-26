@@ -10,7 +10,7 @@ import java.io.IOException;
 import static top.suyiiyii.Utils.readRequestBody2Obj;
 import static top.suyiiyii.Utils.respWrite;
 
-import top.suyiiyii.schemas.User;
+import top.suyiiyii.models.User;
 
 @WebServlet("/user/register")
 public class Register extends HttpServlet {
