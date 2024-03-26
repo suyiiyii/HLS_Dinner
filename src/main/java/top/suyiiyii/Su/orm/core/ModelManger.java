@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.Su.orm.annotation.TableRegister;
 import top.suyiiyii.Su.orm.struct.Table;
+import top.suyiiyii.Su.orm.utils.SqlExecutor;
 
 import java.io.File;
 import java.net.URL;
@@ -20,10 +21,6 @@ import java.util.concurrent.Callable;
 
 
 public class ModelManger {
-    /**
-     * 线程安全：对象在构造函数中初始化，次后只读，不涉及线程安全问题
-     */
-    Log logger = LogFactory.getLog(ModelManger.class);
     private final List<Table> tables = new ArrayList<>();
     // 实体类到表名的映射
     private final Map<Class<?>, String> class2TableName = new HashMap<>();
@@ -34,6 +31,10 @@ public class ModelManger {
     // 表名到表对象的映射
     private final Map<String, Table> tableName2Table = new HashMap<>();
     private final ConnectionManger connectionManger;
+    /**
+     * 线程安全：对象在构造函数中初始化，次后只读，不涉及线程安全问题
+     */
+    Log logger = LogFactory.getLog(ModelManger.class);
 
     /**
      * 框架入口，提供包名和创建连接方法
@@ -73,7 +74,12 @@ public class ModelManger {
         class2Table.put(entityClass, table);
         tableName2Table.put(tableName, table);
         tables.add(table);
-        connectionManger.getSqlExecutor().createTable(table);
+        SqlExecutor executor = connectionManger.getSqlExecutor();
+        boolean value = executor.createTable(table);
+        executor.commit();
+        if (value) {
+            logger.warn("表 " + tableName + " 不存在，已成功创建");
+        }
     }
 
     /**
