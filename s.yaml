@@ -23,7 +23,7 @@ resources:
       cpu: 0.35
       customContainerConfig:
         image: >-
-          registry-vpc.cn-shenzhen.aliyuncs.com/suyiiyii/servelt103:${env('DATETIME')}
+          registry-vpc.cn-shenzhen.aliyuncs.com/suyiiyii/hls_dinner:${env('DATETIME')}
         port: 8080
         healthCheckConfig:
           failureThreshold: 120
