@@ -1,24 +1,31 @@
 package top.suyiiyii.router.user;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import top.suyiiyii.Su.ConfigManger;
+import top.suyiiyii.Su.JwtUtils;
+import top.suyiiyii.Su.orm.core.Session;
 import top.suyiiyii.schemas.Token;
 import top.suyiiyii.schemas.TokenData;
 
 import java.io.IOException;
 import java.util.Date;
 
-import static top.suyiiyii.Utils.*;
+import static top.suyiiyii.Su.orm.WebUtils.getConfigMangerFromConfig;
+import static top.suyiiyii.Su.orm.WebUtils.getSessionFromConfig;
+import static top.suyiiyii.Utils.respWrite;
 
 @WebServlet("/user/login")
 public class Login extends HttpServlet {
     static final Log logger = LogFactory.getLog(Login.class);
+    Session db;
+    ConfigManger config;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -57,6 +64,13 @@ public class Login extends HttpServlet {
 
 
         respWrite(resp, token);
+    }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        this.db = getSessionFromConfig(config);
+        this.config = getConfigMangerFromConfig(config);
     }
 
 }
