@@ -7,11 +7,11 @@ import top.suyiiyii.models.User;
 
 import java.util.NoSuchElementException;
 
-public class UserTempImpl implements Users {
-    Log logger = LogFactory.getLog(UserTempImpl.class);
+public class UsersImpl implements Users {
+    Log logger = LogFactory.getLog(UsersImpl.class);
     private Session db;
 
-    public UserTempImpl(Session db) {
+    public UsersImpl(Session db) {
         this.db = db;
     }
 

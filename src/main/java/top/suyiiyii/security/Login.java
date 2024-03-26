@@ -2,21 +2,21 @@ package top.suyiiyii.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.dao.UserTempImpl;
+import top.suyiiyii.Su.orm.core.Session;
 import top.suyiiyii.dao.Users;
+import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.exception.UserAuthenticationException;
-import top.suyiiyii.schemas.TokenData;
 import top.suyiiyii.models.User;
+import top.suyiiyii.schemas.TokenData;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.NoSuchElementException;
 
 public class Login {
-    static Users users = new UserTempImpl();
     private static final Log logger = LogFactory.getLog(Register.class);
 
-    public static TokenData login(String username, String password) throws UserAuthenticationException {
+    public static TokenData login(Session db, String username, String password) throws UserAuthenticationException {
+        Users users = new UsersImpl(db);
         User user = users.getUserByUsername(username);
 
 
