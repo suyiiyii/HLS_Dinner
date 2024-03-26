@@ -21,9 +21,13 @@ public class Login extends HttpServlet {
     static final Log logger = LogFactory.getLog(Login.class);
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        LoginRequest request = readRequestBody2Obj(req, LoginRequest.class);
+        LoginRequest request = new LoginRequest();
+
+        request.grant_type = req.getParameter("grant_type");
+        request.username = req.getParameter("username");
+        request.password = req.getParameter("password");
 
         logger.info("用户请求登录：" + request.username);
 
@@ -31,7 +35,7 @@ public class Login extends HttpServlet {
 
         token.token_type = "Bearer";
 
-        TokenData tokenData = new TokenData();
+        TokenData tokenData;
 
         try {
             tokenData = top.suyiiyii.security.Login.login(request.username, request.password);
