@@ -15,7 +15,6 @@ import top.suyiiyii.schemas.Token;
 import top.suyiiyii.schemas.TokenData;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static top.suyiiyii.Su.orm.WebUtils.getConfigMangerFromConfig;
 import static top.suyiiyii.Su.orm.WebUtils.getSessionFromConfig;
@@ -45,7 +44,7 @@ public class Login extends HttpServlet {
         TokenData tokenData;
 
         try {
-            tokenData = top.suyiiyii.security.Login.login(request.username, request.password);
+            tokenData = top.suyiiyii.security.Login.login(db, request.username, request.password);
         } catch (Exception e) {
             logger.error("登录失败：" + e.getMessage());
             resp.setStatus(401);
@@ -54,11 +53,8 @@ public class Login extends HttpServlet {
             return;
         }
 
-
-        token.access_token = JWT.create()
-                .withSubject(obj2Json(tokenData))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 3600))
-                .sign(Algorithm.HMAC256("secret"));
+        String secret = config.get("secret");
+        token.access_token = JwtUtils.createToken(request.username, secret, 60 * 10);
 
         logger.info("签发token：" + token.access_token);
 
