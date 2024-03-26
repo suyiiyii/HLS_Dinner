@@ -6,6 +6,8 @@ import top.suyiiyii.dao.UserTempImpl;
 import top.suyiiyii.dao.Users;
 import top.suyiiyii.schemas.User;
 
+import java.security.NoSuchAlgorithmException;
+
 public class Register {
     static Users users = new UserTempImpl();
     private static final Log logger = LogFactory.getLog(Register.class);
@@ -20,7 +22,7 @@ public class Register {
         }
         User user = new User();
         user.username = username;
-        user.password = password;
+        user.password = top.suyiiyii.security.Login.hashPassword(password);
 
         user = users.createUser(user);
         logger.info("用户注册成功：" + username);

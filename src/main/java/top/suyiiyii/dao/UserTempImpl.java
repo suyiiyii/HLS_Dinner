@@ -5,6 +5,7 @@ import top.suyiiyii.schemas.User;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class UserTempImpl implements Users {
     private static final List<User> users = new LinkedList<>();
@@ -15,8 +16,12 @@ public class UserTempImpl implements Users {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return users.stream().filter(user1 -> user1.username.equals(username)).findFirst().orElse(null);
+    public User getUserByUsername(String username) throws NoSuchElementException {
+        User user = users.stream().filter(user1 -> user1.username.equals(username)).findFirst().orElse(null);
+        if (user == null) {
+            throw new NoSuchElementException("用户不存在");
+        }
+        return user;
     }
 
     @Override

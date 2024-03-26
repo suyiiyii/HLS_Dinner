@@ -32,7 +32,17 @@ public class Login extends HttpServlet {
         token.token_type = "Bearer";
 
         TokenData tokenData = new TokenData();
-        tokenData = top.suyiiyii.security.Login.login(request.username, request.password);
+
+        try {
+            tokenData = top.suyiiyii.security.Login.login(request.username, request.password);
+        } catch (Exception e) {
+            logger.error("登录失败：" + e.getMessage());
+            resp.setStatus(401);
+            respWrite(resp, e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
 
         token.access_token = JWT.create()
                 .withSubject(obj2Json(tokenData))
