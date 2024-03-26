@@ -41,12 +41,6 @@ public class Session {
     public Session(ModelManger modelManger) {
         this.modelManger = modelManger;
         this.sqlExecutor = modelManger.getConnectionManger().getSqlExecutor();
-        try {
-            // 开启事务
-            this.sqlExecutor.getConn().setAutoCommit(false);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -316,6 +310,14 @@ public class Session {
             }
         }
 
+    }
+
+    public void setAutoCommit(boolean autoCommit) {
+        sqlExecutor.setAutoCommit(autoCommit);
+    }
+
+    public void close() {
+        sqlExecutor.close();
     }
 
 }

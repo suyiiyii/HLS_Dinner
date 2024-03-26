@@ -71,6 +71,7 @@
 # Tips
 
 * 建议一个项目只创建一个`ModelManger`实例
+* 默认不启用事务
 * 由于实现原因，需要实现一个作为主键并且自增的id字段
 * 一个Session对应的是一个Connection
 * 如果有修改，需要用`commit`方法提交

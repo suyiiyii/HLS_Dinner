@@ -157,4 +157,12 @@ public class SqlExecutor {
     public void close() {
         connectionManger.returnConnection(conn);
     }
+
+    public void setAutoCommit(boolean autoCommit) {
+        try {
+            conn.setAutoCommit(autoCommit);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
