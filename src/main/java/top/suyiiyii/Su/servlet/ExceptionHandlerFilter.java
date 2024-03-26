@@ -1,0 +1,45 @@
+package top.suyiiyii.Su.servlet;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import top.suyiiyii.Su.WebUtils;
+
+import java.io.IOException;
+
+
+/**
+ * 异常处理过滤器
+ * 捕获所有异常并返回异常信息
+ */
+public class ExceptionHandlerFilter implements Filter {
+
+    private static final Log logger = LogFactory.getLog(ExceptionHandlerFilter.class);
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException {
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        logger.info("开始处理请求： " + req.getRequestURI());
+        try {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } catch (Exception e) {
+            logger.error("请求处理失败： " + e.getMessage());
+            HttpServletResponse resp = (HttpServletResponse) servletResponse;
+            WebUtils.respWrite(resp, e.getMessage());
+            resp.setStatus(500);
+        }
+        logger.info("请求处理完成： " + req.getRequestURI());
+    }
+
+    @Override
+    public void destroy() {
+        Filter.super.destroy();
+    }
+}
