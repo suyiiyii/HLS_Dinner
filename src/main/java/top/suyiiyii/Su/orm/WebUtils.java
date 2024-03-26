@@ -20,7 +20,7 @@ public class WebUtils {
      */
 
     public static Session getSessionFromConfig(ServletConfig config) {
-        return ((ModelManger) config.getServletContext().getAttribute("modelManger")).getSession();
+        return ((ModelManger) config.getServletContext().getAttribute("ModelManger")).getSession();
     }
 
     /**
@@ -31,6 +31,6 @@ public class WebUtils {
      */
 
     public static ConfigManger getConfigMangerFromConfig(ServletConfig config) {
-        return (ConfigManger) config.getServletContext().getAttribute("configManger");
+        return (ConfigManger) config.getServletContext().getAttribute("ConfigManger");
     }
 }

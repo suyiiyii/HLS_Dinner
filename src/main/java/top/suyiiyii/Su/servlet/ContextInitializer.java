@@ -34,8 +34,8 @@ public class ContextInitializer implements ServletContextListener {
         ModelManger modelManger = new ModelManger("top.suyiiyii.models", builder::getConnection);
 
         ServletContext servletContext = sce.getServletContext();
-        servletContext.setAttribute("modelManger", modelManger);
-        servletContext.setAttribute("config", configManger);
+        servletContext.setAttribute("ModelManger", modelManger);
+        servletContext.setAttribute("ConfigManger", configManger);
         logger.info("依赖注入完成");
     }
 }
