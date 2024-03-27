@@ -53,7 +53,7 @@ public class Session {
      * @param <T>   表对应的类
      * @return 包含表的所有信息的列表
      */
-    public <T> List<T> selectAll(Class<T> clazz) {
+    public <T> List<T> selectAll(Class<T> clazz) throws SQLException {
         String tableName = modelManger.getClass2TableName().get(clazz);
         String sql = RowSqlGenerater.selectAll(tableName);
         ResultSet resultSet = sqlExecutor.query(sql);
@@ -103,7 +103,11 @@ public class Session {
     public void commit() {
         // 提交插入
         for (Map.Entry<Class<?>, List<Object>> entry : insertCache.entrySet()) {
-            batchInsert(entry.getValue());
+            try {
+                batchInsert(entry.getValue());
+            } catch (Exception e) {
+                throw new RuntimeException("插入失败" + e);
+            }
         }
         if (!cache.isEmpty()) {
             checkUpdate();
@@ -127,37 +131,33 @@ public class Session {
      * @param list 待插入的对象列表
      * @param <T>  待插入的对象的类型
      */
-    public <T> void batchInsert(List<T> list) {
+    public <T> void batchInsert(List<T> list) throws SQLException, NoSuchFieldException, IllegalAccessException {
         if (list.isEmpty()) {
             return;
         }
         Class<?> clazz = list.get(0).getClass();
         Table table = modelManger.getClass2Table().get(clazz);
         String sql = RowSqlGenerater.getInsertSql(table);
-        try {
-            PreparedStatement preparedStatement = sqlExecutor.getPreparedStatement(sql);
-            for (T obj : list) {
-                // 因为缺少部分字段，所以需要计数器保证字段序号的连续
-                int cnt = 1;
-                for (int i = 0; i < table.columns.size(); i++) {
-                    // 如果是自增字段则跳过
-                    if (table.columns.get(i).isAutoIncrement) {
-                        continue;
-                    }
-                    // 获取字段名
-                    String fieldName = UniversalUtils.downToCaml(table.columns.get(i).name);
-                    // 获取字段的值
-                    Field field = obj.getClass().getDeclaredField(fieldName);
-                    field.setAccessible(true);
-                    preparedStatement.setObject(cnt++, field.get(obj));
+        PreparedStatement preparedStatement = sqlExecutor.getPreparedStatement(sql);
+        for (T obj : list) {
+            // 因为缺少部分字段，所以需要计数器保证字段序号的连续
+            int cnt = 1;
+            for (int i = 0; i < table.columns.size(); i++) {
+                // 如果是自增字段则跳过
+                if (table.columns.get(i).isAutoIncrement) {
+                    continue;
                 }
-                preparedStatement.addBatch();
+                // 获取字段名
+                String fieldName = UniversalUtils.downToCaml(table.columns.get(i).name);
+                // 获取字段的值
+                Field field = obj.getClass().getDeclaredField(fieldName);
+                field.setAccessible(true);
+                preparedStatement.setObject(cnt++, field.get(obj));
             }
-            sqlExecutor.execute(preparedStatement, true);
-            list.clear();
-        } catch (Exception e) {
-            e.printStackTrace();
+            preparedStatement.addBatch();
         }
+        sqlExecutor.execute(preparedStatement, true);
+        list.clear();
     }
 
     /**
@@ -189,7 +189,7 @@ public class Session {
             }
             sqlExecutor.execute(preparedStatement);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("插入失败" + e);
         }
     }
 
@@ -227,7 +227,7 @@ public class Session {
             }
             sqlExecutor.execute(preparedStatement);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("更新失败" + e);
         }
     }
 
