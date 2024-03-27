@@ -38,7 +38,7 @@ public class ExceptionHandlerFilter implements Filter {
             String stackTrace = Arrays.stream(e.getStackTrace())
                     .map(StackTraceElement::toString)
                     .collect(Collectors.joining("\n"));
-            logger.error("请求处理失败： " + stackTrace);
+            logger.error("请求处理失败： " + e.getMessage() + "\n" + stackTrace);
             HttpServletResponse resp = (HttpServletResponse) servletResponse;
             WebUtils.respWrite(resp, e.getMessage());
             resp.setStatus(500);

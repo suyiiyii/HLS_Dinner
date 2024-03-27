@@ -41,15 +41,7 @@ public class Login extends BaseHttpServlet {
 
         TokenData tokenData;
 
-        try {
-            tokenData = top.suyiiyii.security.Login.login(db, request.username, request.password);
-        } catch (Exception e) {
-            logger.error("登录失败：" + e.getMessage());
-            resp.setStatus(401);
-            respWrite(resp, e.getMessage());
-            throw new RuntimeException("登录失败：" + e);
-        }
-
+        tokenData = top.suyiiyii.security.Login.login(db, request.username, request.password);
         String secret = configManger.get("secret");
         token.access_token = JwtUtils.createToken(tokenData, secret, 60 * 10);
 

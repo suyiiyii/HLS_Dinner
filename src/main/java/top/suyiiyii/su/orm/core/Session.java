@@ -328,7 +328,7 @@ public class Session {
      *
      * @param autoCommit 是否自动提交
      */
-    public void setAutoCommit(boolean autoCommit) {
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
         sqlExecutor.setAutoCommit(autoCommit);
     }
 

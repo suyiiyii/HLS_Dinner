@@ -6,7 +6,7 @@ package top.suyiiyii.exception;
  *
  * @author suyiiyii
  */
-public class UserAuthenticationException extends Exception {
+public class UserAuthenticationException extends RuntimeException {
     public UserAuthenticationException(String message) {
         super(message);
     }
