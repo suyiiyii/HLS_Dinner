@@ -29,6 +29,10 @@ public class TableSqlGenerater {
             if (column.isNotNull) {
                 sql.append(" NOT NULL");
             }
+            // 是否唯一
+            if (column.isUnique) {
+                sql.append(" UNIQUE");
+            }
             // 是否是主键
             if (column.isPrimaryKey) {
                 sql.append(" PRIMARY KEY");

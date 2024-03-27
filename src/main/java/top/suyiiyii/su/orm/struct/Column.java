@@ -25,6 +25,7 @@ public class Column {
     };
     public String name;
     public String type;
+    public boolean isUnique;
     public boolean isPrimaryKey;
     public boolean isAutoIncrement;
     public boolean isNotNull;
@@ -55,6 +56,7 @@ public class Column {
         if (field.isAnnotationPresent(ColumnSetting.class)) {
             ColumnSetting columnSetting = field.getAnnotation(ColumnSetting.class);
             this.isPrimaryKey = columnSetting.isPrimaryKey();
+            this.isUnique = columnSetting.isUnique();
             this.isAutoIncrement = columnSetting.isAutoIncrement();
             this.isNotNull = columnSetting.isNotNull();
             this.stringLength = columnSetting.stringLength();

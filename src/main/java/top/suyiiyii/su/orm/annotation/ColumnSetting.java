@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
 public @interface ColumnSetting {
     boolean isNotNull() default false;
 
+    boolean isUnique() default false;
+
     boolean isPrimaryKey() default false;
 
     boolean isAutoIncrement() default false;
