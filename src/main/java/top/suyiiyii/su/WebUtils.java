@@ -56,6 +56,9 @@ public class WebUtils {
             stringBuilder.append(line);
         }
         String str = stringBuilder.toString();
+        if (str.isEmpty()) {
+            throw new IOException("请求体为空");
+        }
         return MAPPER.readValue(str, valueType);
     }
 

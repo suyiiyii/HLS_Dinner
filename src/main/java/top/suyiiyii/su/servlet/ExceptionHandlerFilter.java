@@ -38,10 +38,11 @@ public class ExceptionHandlerFilter implements Filter {
             String stackTrace = Arrays.stream(e.getStackTrace())
                     .map(StackTraceElement::toString)
                     .collect(Collectors.joining("\n"));
-            logger.error("请求处理失败： " + stackTrace);
+            logger.error("请求处理失败： " + e.getMessage() + "\n" + stackTrace);
             HttpServletResponse resp = (HttpServletResponse) servletResponse;
-            WebUtils.respWrite(resp, e.getMessage());
+            // 暂时不考虑使用不同的状态码，待后续使用Spring等框架再进行优化
             resp.setStatus(500);
+            WebUtils.respWrite(resp, e.getMessage());
         }
         logger.info("请求处理完成： " + req.getRequestURI());
     }

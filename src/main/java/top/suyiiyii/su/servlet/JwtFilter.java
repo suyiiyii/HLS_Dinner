@@ -35,8 +35,10 @@ public class JwtFilter implements Filter {
         // 获取token
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         logger.info("JwtFilter: " + req.getRequestURI());
-        // 白名单机制，跳过登录注册接口
-        if (req.getRequestURI().equals("/user/login") || req.getRequestURI().equals("/user/register")) {
+        // 白名单机制，跳过登录注册接口以及健康检查接口
+        if (req.getRequestURI().equals("/user/login") ||
+                req.getRequestURI().equals("/user/register") ||
+                req.getRequestURI().equals("/health_check")){
             logger.info("跳过登录注册接口");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -49,16 +51,12 @@ public class JwtFilter implements Filter {
 
         // 验证token
         String tokenStr = verifyToken(token, configManger.get("secret"));
-        if (!tokenStr.isEmpty()) {
-            // 注入tokenData
-            TokenData tokenData = UniversalUtils.json2Obj(tokenStr, TokenData.class);
-            req.setAttribute("tokenData", tokenData);
-            logger.info("token verify success");
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            System.out.println("token verify failed");
-            throw new ServletException("token验证失败");
-        }
+
+        // 注入tokenData
+        TokenData tokenData = UniversalUtils.json2Obj(tokenStr, TokenData.class);
+        req.setAttribute("tokenData", tokenData);
+        logger.info("token verify success");
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

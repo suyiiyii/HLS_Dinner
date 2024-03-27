@@ -90,6 +90,12 @@ public class SqlExecutor {
         }
     }
 
+    /**
+     * 执行语句 预编译版
+     *
+     * @param preparedStatement 预编译的sql语句
+     * @return 是否执行成功
+     */
     public boolean execute(PreparedStatement preparedStatement) throws SQLException {
         return execute(preparedStatement, false);
     }
@@ -114,32 +120,37 @@ public class SqlExecutor {
         return preparedStatement.executeQuery();
     }
 
-    public void commit() {
-        try {
-            this.conn.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * 提交事务
+     */
+    public void commit() throws SQLException {
+        this.conn.commit();
     }
 
 
-    public void rollback() {
-        try {
-            this.conn.rollback();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * 回滚事务
+     *
+     * @throws SQLException SQL异常
+     */
+    public void rollback() throws SQLException {
+        this.conn.rollback();
     }
 
+    /**
+     * 关闭连接
+     * 实际上是归还连接
+     */
     public void close() {
         connectionManger.returnConnection(conn);
     }
 
-    public void setAutoCommit(boolean autoCommit) {
-        try {
-            conn.setAutoCommit(autoCommit);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * 设置自动提交
+     *
+     * @param autoCommit 是否自动提交
+     */
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        conn.setAutoCommit(autoCommit);
     }
 }

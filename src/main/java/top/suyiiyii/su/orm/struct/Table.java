@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * 表对象
  * 保存的表名和所包含的字段
+ *
+ * @author suyiiyii
  */
 public class Table {
     public String tableName;
