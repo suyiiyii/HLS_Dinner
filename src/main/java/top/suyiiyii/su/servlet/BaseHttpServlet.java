@@ -42,6 +42,10 @@ public class BaseHttpServlet extends HttpServlet {
         if (tokenData != null) {
             this.uid = tokenData.uid;
         }
-        super.service(req, resp);
+        try {
+            super.service(req, resp);
+        } finally {
+            db.close();
+        }
     }
 }
