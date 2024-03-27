@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet("/health_check")
 public class HealthCheck extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HealthCheckResponse healthCheckResponse = new HealthCheckResponse("heathy");
         WebUtils.respWrite(resp, healthCheckResponse);
     }
