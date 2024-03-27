@@ -7,6 +7,11 @@ import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.models.User;
 import top.suyiiyii.su.orm.core.Session;
 
+/**
+ * 注册Service
+ *
+ * @author suyiiyii
+ */
 public class Register {
     private static final Log logger = LogFactory.getLog(Register.class);
 

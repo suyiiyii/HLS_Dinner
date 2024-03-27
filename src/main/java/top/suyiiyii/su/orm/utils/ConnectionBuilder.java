@@ -5,6 +5,8 @@ import java.sql.Connection;
 /**
  * 连接构建器
  * 调用getConnection方法将会返回一个连接
+ *
+ * @author suyiiyii
  */
 public class ConnectionBuilder {
     /**
