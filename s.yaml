@@ -38,6 +38,7 @@ resources:
         JDBC_URL: ${env('JDBC_URL')}
         JDBC_USER: ${env('JDBC_USER')}
         JDBC_PASSWORD: ${env('JDBC_PASSWORD')}
+        secret: ${env('secret')}
       triggers:
         - triggerConfig:
             methods:
