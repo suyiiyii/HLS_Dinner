@@ -12,6 +12,12 @@ import top.suyiiyii.su.servlet.BaseHttpServlet;
 
 import java.io.IOException;
 
+/**
+ * 获取问候信息
+ * 用于测试
+ *
+ * @author suyiiyii
+ */
 @WebServlet("/server/info")
 public class ServerInfo extends BaseHttpServlet {
     @Override

@@ -114,21 +114,16 @@ public class SqlExecutor {
         return preparedStatement.executeQuery();
     }
 
-    public void commit() {
-        try {
-            this.conn.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * 提交事务
+     */
+    public void commit() throws SQLException {
+        this.conn.commit();
     }
 
 
-    public void rollback() {
-        try {
-            this.conn.rollback();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void rollback() throws SQLException {
+        this.conn.rollback();
     }
 
     public void close() {

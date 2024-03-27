@@ -100,7 +100,7 @@ public class Session {
      * 提交事务
      * 提交暂存区的数据
      */
-    public void commit() {
+    public void commit() throws SQLException {
         // 提交插入
         for (Map.Entry<Class<?>, List<Object>> entry : insertCache.entrySet()) {
             try {
@@ -120,7 +120,7 @@ public class Session {
     /**
      * 回滚事务
      */
-    public void rollback() {
+    public void rollback() throws SQLException {
         sqlExecutor.rollback();
     }
 
@@ -193,6 +193,13 @@ public class Session {
         }
     }
 
+    /**
+     * 更新单个对象
+     * 使用主键作为更新条件
+     *
+     * @param obj 待更新的对象
+     * @param <T> 待更新的对象的类型
+     */
     public <T> void update(T obj) {
         Table table = modelManger.getClass2Table().get(obj.getClass());
         String sql = RowSqlGenerater.getUpdateSql(table);
@@ -294,7 +301,11 @@ public class Session {
         });
     }
 
-    public void checkUpdate() {
+    /**
+     * 检查已经查询出的对象是否有更改
+     * 如果有更改则进行更新
+     */
+    private void checkUpdate() {
         List<Object> toUpdate = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : cache.entrySet()) {
             Object ori = entry.getValue();
@@ -310,13 +321,21 @@ public class Session {
                 this.update(obj);
             }
         }
-
     }
 
+    /**
+     * 设置是否自动提交
+     *
+     * @param autoCommit 是否自动提交
+     */
     public void setAutoCommit(boolean autoCommit) {
         sqlExecutor.setAutoCommit(autoCommit);
     }
 
+    /**
+     * 关闭连接
+     * 最终是归还连接
+     */
     public void close() {
         sqlExecutor.close();
     }

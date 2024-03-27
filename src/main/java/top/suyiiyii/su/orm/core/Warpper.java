@@ -32,51 +32,100 @@ public class Warpper {
     private int pageNum = -1;
     private int pageSize = -1;
 
+    /**
+     * 构造函数，记录了要操作的表和具体的操作
+     *
+     * @param clazz    要操作的表
+     * @param callBack 回调函数
+     */
     public Warpper(Class<?> clazz, CallBack callBack) {
         this.clazz = clazz;
         this.callBack = callBack;
     }
 
+    /**
+     * 获取要操作的表
+     * 供回调函数使用
+     *
+     * @return 要操作的表
+     */
     public Class<?> getClazz() {
         return clazz;
     }
 
-    // 相等条件
+    /**
+     * 等于条件
+     *
+     * @param key   字段名
+     * @param value 值
+     * @return this
+     */
     public Warpper eq(String key, Object value) {
         whereStatement.add(key + " = ?");
         params.add(value);
         return this;
     }
 
-    // 不等条件
+    /**
+     * 不等条件
+     *
+     * @param key   字段名
+     * @param value 值
+     * @return this
+     */
     public Warpper neq(String key, Object value) {
         whereStatement.add(key + " != ?");
         params.add(value);
         return this;
     }
 
-    // 全字匹配
+    /**
+     * 全字匹配条件
+     *
+     * @param key   字段名
+     * @param value 值
+     * @return this
+     */
     public Warpper like(String key, Object value) {
         whereStatement.add(key + " LIKE ?");
         params.add(value);
         return this;
     }
 
-    // 模糊匹配
+
+    /**
+     * 模糊匹配条件
+     *
+     * @param key   字段名
+     * @param value 值
+     * @return this
+     */
     public Warpper fuzzLike(String key, String value) {
         whereStatement.add(key + " LIKE ?");
         params.add("%" + value + "%");
         return this;
     }
 
-    // 分页
+    /**
+     * 分页
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页数量
+     * @return this
+     */
     public Warpper limit(int pageNum, int pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         return this;
     }
 
-    // SET
+    /**
+     * 设置字段值，用于更新
+     *
+     * @param key   字段名
+     * @param value 值
+     * @return this
+     */
     public Warpper set(String key, Object value) {
         setStatement.add(key + " = ?");
         params.add(value);
@@ -84,6 +133,12 @@ public class Warpper {
     }
 
 
+    /**
+     * 构建sql语句，将where条件和set条件拼接到基础sql上
+     *
+     * @param baseSql 基础sql
+     * @return 构建好的sql
+     */
     public String buildSql(String baseSql) {
         StringBuilder sql = new StringBuilder(baseSql);
         if (!setStatement.isEmpty()) {
@@ -105,6 +160,14 @@ public class Warpper {
     }
 
 
+    /**
+     * 填充参数
+     * 按照参数列表的顺序填充添加相应的条件到PreparedStatement
+     *
+     * @param ps PreparedStatement
+     * @return PreparedStatement
+     * @throws SQLException SQL异常
+     */
     public PreparedStatement fillParams(PreparedStatement ps) throws SQLException {
         for (int i = 0; i < params.size(); i++) {
             ps.setObject(i + 1, params.get(i));
@@ -112,14 +175,37 @@ public class Warpper {
         return ps;
     }
 
+    /**
+     * 无返回值执行
+     * 需要回调函数配合使用
+     *
+     * @throws SQLException SQL异常
+     */
     public void execute() throws SQLException {
         callBack.call(this);
     }
 
+    /**
+     * 列表返回值查询
+     * 需要回调函数配合使用
+     *
+     * @param <T> 返回类型
+     * @return 结果列表
+     * @throws SQLException SQL异常
+     */
     public <T> List<T> all() throws SQLException {
         return (List<T>) callBack.call(this);
     }
 
+    /**
+     * 单个对象返回值查询
+     * 需要回调函数配合使用
+     * 将分页信息设置为1,1，获取第一个结果
+     *
+     * @param <T> 返回类型
+     * @return 结果
+     * @throws SQLException SQL异常
+     */
     public <T> T first() throws SQLException {
         pageNum = 1;
         pageSize = 1;
