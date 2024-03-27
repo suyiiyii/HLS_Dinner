@@ -17,7 +17,7 @@ public class UniversalUtils {
      * @throws IOException IOException
      */
     public static String obj2Json(Object object) throws IOException {
-        return WebUtils.mapper.writeValueAsString(object);
+        return WebUtils.MAPPER.writeValueAsString(object);
     }
 
     /**
@@ -31,7 +31,7 @@ public class UniversalUtils {
      */
 
     public static <T> T json2Obj(String json, Class<T> valueType) throws IOException {
-        return WebUtils.mapper.readValue(json, valueType);
+        return WebUtils.MAPPER.readValue(json, valueType);
     }
 
     /**

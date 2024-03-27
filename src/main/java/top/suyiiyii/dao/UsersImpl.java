@@ -2,19 +2,31 @@ package top.suyiiyii.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.su.orm.core.Session;
 import top.suyiiyii.models.User;
+import top.suyiiyii.su.orm.core.Session;
 
 import java.util.NoSuchElementException;
 
+/**
+ * UsersImpl UserDAO的实现
+ * 用于操作用户表
+ *
+ * @author suyiiyii
+ */
 public class UsersImpl implements Users {
     Log logger = LogFactory.getLog(UsersImpl.class);
-    private Session db;
+    private final Session db;
 
     public UsersImpl(Session db) {
         this.db = db;
     }
 
+    /**
+     * 根据id获取用户
+     *
+     * @param id 用户id
+     * @return 用户
+     */
     @Override
     public User getUserById(int id) {
         logger.debug("getUserById: " + id);
@@ -30,6 +42,13 @@ public class UsersImpl implements Users {
         return user;
     }
 
+    /**
+     * 根据用户名获取用户
+     *
+     * @param username 用户名
+     * @return 用户
+     * @throws NoSuchElementException 用户不存在
+     */
     @Override
     public User getUserByUsername(String username) throws NoSuchElementException {
         User user = null;
@@ -44,6 +63,12 @@ public class UsersImpl implements Users {
         return user;
     }
 
+    /**
+     * 创建用户
+     *
+     * @param user 用户
+     * @return 用户
+     */
     @Override
     public User createUser(User user) {
         try {

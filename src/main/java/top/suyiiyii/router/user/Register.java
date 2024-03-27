@@ -27,7 +27,7 @@ public class Register extends HttpServlet {
     Session db;
     ConfigManger config;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RegisterRequest registerRequest = readRequestBody2Obj(request, RegisterRequest.class);
         User user = new User();
         user = top.suyiiyii.security.Register.register(db, registerRequest.username, registerRequest.password);

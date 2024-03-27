@@ -2,7 +2,7 @@ package top.suyiiyii.su;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.su.exception.ConfigNotFound;
+import top.suyiiyii.su.exception.ConfigNotFoundException;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class ConfigManger {
             String value = System.getenv(key);
             if (value == null) {
                 logger.error("环境变量中没有找到 " + key);
-                throw new ConfigNotFound("配置文件和环境变量中都没有找到 " + key);
+                throw new ConfigNotFoundException("配置文件和环境变量中都没有找到 " + key);
             }
             return value;
         });

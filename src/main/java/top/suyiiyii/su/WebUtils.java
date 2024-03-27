@@ -13,13 +13,13 @@ import java.io.PrintWriter;
  * <p>
  * 封装了几个经常要用到的方法，比如读取请求体和写响应体
  *
+ * @author suyiiyii
  * @version 1.5
- * @auther suyiiyii
  * @date 2023.3.25
  */
 public class WebUtils {
 
-    public static final ObjectMapper mapper = new ObjectMapper();
+    public static final ObjectMapper MAPPER = new ObjectMapper();
 
 
     /**
@@ -56,7 +56,7 @@ public class WebUtils {
             stringBuilder.append(line);
         }
         String str = stringBuilder.toString();
-        return mapper.readValue(str, valueType);
+        return MAPPER.readValue(str, valueType);
     }
 
     /**
@@ -83,7 +83,7 @@ public class WebUtils {
         resp.setContentType("application/json");
         PrintWriter pw = resp.getWriter();
 
-        String jsonStr = mapper.writeValueAsString(object);
+        String jsonStr = MAPPER.writeValueAsString(object);
         pw.write(jsonStr);
         pw.flush();
     }

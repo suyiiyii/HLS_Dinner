@@ -8,18 +8,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import top.suyiiyii.schemas.Token;
+import top.suyiiyii.schemas.TokenData;
 import top.suyiiyii.su.ConfigManger;
 import top.suyiiyii.su.JwtUtils;
 import top.suyiiyii.su.orm.core.Session;
-import top.suyiiyii.schemas.Token;
-import top.suyiiyii.schemas.TokenData;
 
 import java.io.IOException;
 
+import static top.suyiiyii.su.WebUtils.respWrite;
 import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
 import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
-import static top.suyiiyii.su.WebUtils.respWrite;
 
+/**
+ * 用户登录Servlet
+ * 登录成功后签发token
+ *
+ * @author suyiiyii
+ */
 @WebServlet("/user/login")
 public class Login extends HttpServlet {
     static final Log logger = LogFactory.getLog(Login.class);

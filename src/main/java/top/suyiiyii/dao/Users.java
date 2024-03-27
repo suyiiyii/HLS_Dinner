@@ -4,6 +4,12 @@ import top.suyiiyii.models.User;
 
 import java.util.NoSuchElementException;
 
+
+/**
+ * UsersDAO 接口
+ *
+ * @author suyiiyii
+ */
 public interface Users {
     User getUserById(int id);
 

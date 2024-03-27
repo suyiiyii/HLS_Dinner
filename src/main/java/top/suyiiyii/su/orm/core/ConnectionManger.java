@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 /**
  * 与数据库直接相关的操作
  * 保存了连接池
+ *
  * @author suyiiyii
  */
 public class ConnectionManger {

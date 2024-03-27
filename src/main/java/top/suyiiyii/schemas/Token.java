@@ -4,7 +4,7 @@ package top.suyiiyii.schemas;
  * Token
  * 用于存储token
  *
- * @auther suyiiyii
+ * @author suyiiyii
  */
 public class Token {
     public String access_token;

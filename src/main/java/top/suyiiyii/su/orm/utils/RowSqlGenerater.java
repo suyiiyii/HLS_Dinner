@@ -5,6 +5,7 @@ import top.suyiiyii.su.orm.struct.Table;
 
 /**
  * 有关行的sql生成
+ *
  * @author suyiiyii
  */
 public class RowSqlGenerater {

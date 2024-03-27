@@ -5,8 +5,8 @@ package top.suyiiyii.su.exception;
  *
  * @author suyiiyii
  */
-public class ConfigNotFound extends RuntimeException {
-    public ConfigNotFound(String message) {
+public class ConfigNotFoundException extends RuntimeException {
+    public ConfigNotFoundException(String message) {
         super(message);
     }
 }

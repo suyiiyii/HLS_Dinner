@@ -3,6 +3,12 @@ package top.suyiiyii.models;
 import top.suyiiyii.su.orm.annotation.ColumnSetting;
 import top.suyiiyii.su.orm.annotation.TableRegister;
 
+/**
+ * user表模型
+ * 用于存储用户信息
+ *
+ * @author suyiiyii
+ */
 @TableRegister("user")
 public class User {
     @ColumnSetting(isPrimaryKey = true, isAutoIncrement = true)
