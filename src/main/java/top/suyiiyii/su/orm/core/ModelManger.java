@@ -76,11 +76,15 @@ public class ModelManger {
         tableName2Table.put(tableName, table);
         tables.add(table);
         SqlExecutor executor = connectionManger.getSqlExecutor();
-        boolean value = executor.createTable(table);
-        executor.close();
-        if (value) {
-            logger.warn("表 " + tableName + " 不存在，已成功创建");
+        try {
+            boolean value = executor.createTable(table);
+            if (value) {
+                logger.warn("表 " + tableName + " 不存在，已成功创建");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        executor.close();
     }
 
     /**

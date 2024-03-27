@@ -40,7 +40,7 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>JwtFilter</filter-name>
-        <url-pattern>/server/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 </web-app>

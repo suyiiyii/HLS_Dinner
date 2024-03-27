@@ -47,8 +47,8 @@ public class Login {
         try {
             md = MessageDigest.getInstance("md5");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             logger.error("md5算法不可用");
+            throw new RuntimeException("md5算法不可用");
         }
         md.update(password.getBytes());
         md.update("suyiiyii".getBytes());

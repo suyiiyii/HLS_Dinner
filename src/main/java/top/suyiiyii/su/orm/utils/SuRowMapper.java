@@ -14,6 +14,7 @@ package top.suyiiyii.su.orm.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,18 +41,17 @@ public class SuRowMapper<T> {
      * @param resultSet   数据库查询结果集
      * @return 包含实体对象的列表
      */
-    public static <T> List<T> rowMapper(Class<T> entityClazz, ResultSet resultSet) {
+    public static <T> List<T> rowMapper(Class<T> entityClazz, ResultSet resultSet) throws SQLException, RuntimeException {
         // 实例化列表以存储映射后的实体对象
         List<T> entityList = new ArrayList<>();
-
-        try {
-            while (resultSet.next()) {
-                // 将当前行的数据映射到实体对象中
+        while (resultSet.next()) {
+            // 将当前行的数据映射到实体对象中
+            try {
                 T entity = getEntity(resultSet, entityClazz);
                 entityList.add(entity);
+            } catch (Exception e) {
+                throw new RuntimeException("映射实体类失败");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return entityList;
     }
@@ -65,7 +65,7 @@ public class SuRowMapper<T> {
      * @return 实体类的新实例，
      * @throws Exception 异常
      */
-    public static <T> T getEntity(ResultSet resultSet, Class<T> entityClass) throws Exception {
+    public static <T> T getEntity(ResultSet resultSet, Class<T> entityClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
         // 创建并初始化一个新的实体类实例
         Constructor<T> constructor = entityClass.getDeclaredConstructor();
         // 设置构造函数可访问以便实例化
