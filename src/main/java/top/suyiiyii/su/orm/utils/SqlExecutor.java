@@ -49,16 +49,12 @@ public class SqlExecutor {
      * @param table 表对象
      * @return 是否创建成功
      */
-    public boolean createTable(Table table) {
+    public boolean createTable(Table table) throws SQLException {
         // 判断表是否存在
         String sql = TableSqlGenerater.getIsTableExistSql(table);
         ResultSet resultSet = query(sql);
-        try {
-            if (resultSet.next()) {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (resultSet.next()) {
+            return false;
         }
         // 不存在则创建
         sql = TableSqlGenerater.getCreateTableSql(table);
@@ -71,14 +67,8 @@ public class SqlExecutor {
      * @param sql sql语句
      * @return 是否执行成功
      */
-    public boolean execute(String sql) {
-        try {
-            conn.createStatement().execute(sql);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean execute(String sql) throws SQLException {
+        return conn.createStatement().execute(sql);
     }
 
     /**
@@ -87,7 +77,7 @@ public class SqlExecutor {
      * @param preparedStatement 预编译的sql语句
      * @return 是否执行成功
      */
-    public boolean execute(PreparedStatement preparedStatement, boolean isBatch) {
+    public boolean execute(PreparedStatement preparedStatement, boolean isBatch) throws SQLException {
         try {
             if (isBatch) {
                 preparedStatement.executeBatch();
@@ -95,15 +85,12 @@ public class SqlExecutor {
                 preparedStatement.execute();
             }
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
         } finally {
             connectionManger.returnConnection(conn);
         }
     }
 
-    public boolean execute(PreparedStatement preparedStatement) {
+    public boolean execute(PreparedStatement preparedStatement) throws SQLException {
         return execute(preparedStatement, false);
     }
 
@@ -113,14 +100,8 @@ public class SqlExecutor {
      * @param sql sql语句
      * @return 查询结果
      */
-    public ResultSet query(String sql) {
-        ResultSet resultSet = null;
-        try {
-            resultSet = conn.createStatement().executeQuery(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultSet;
+    public ResultSet query(String sql) throws SQLException {
+        return conn.createStatement().executeQuery(sql);
     }
 
     /**
@@ -129,14 +110,8 @@ public class SqlExecutor {
      * @param preparedStatement 预编译的sql语句
      * @return 查询结果
      */
-    public ResultSet query(PreparedStatement preparedStatement) {
-        ResultSet resultSet = null;
-        try {
-            resultSet = preparedStatement.executeQuery();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultSet;
+    public ResultSet query(PreparedStatement preparedStatement) throws SQLException {
+        return preparedStatement.executeQuery();
     }
 
     public void commit() {

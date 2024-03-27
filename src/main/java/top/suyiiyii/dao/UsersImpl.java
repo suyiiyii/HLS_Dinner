@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
  * @author suyiiyii
  */
 public class UsersImpl implements Users {
-    Log logger = LogFactory.getLog(UsersImpl.class);
     private final Session db;
+    Log logger = LogFactory.getLog(UsersImpl.class);
 
     public UsersImpl(Session db) {
         this.db = db;

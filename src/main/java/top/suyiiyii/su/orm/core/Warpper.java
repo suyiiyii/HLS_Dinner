@@ -105,13 +105,9 @@ public class Warpper {
     }
 
 
-    public PreparedStatement fillParams(PreparedStatement ps) {
+    public PreparedStatement fillParams(PreparedStatement ps) throws SQLException {
         for (int i = 0; i < params.size(); i++) {
-            try {
-                ps.setObject(i + 1, params.get(i));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            ps.setObject(i + 1, params.get(i));
         }
         return ps;
     }

@@ -60,7 +60,7 @@ public class SuConnectionPool implements ConnectionPool {
                 Connection connection = newConnection.call();
                 availableConnections.add(connection);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Init connection pool error: %s".formatted(e));
             }
         }
         startDaemon();
@@ -83,7 +83,8 @@ public class SuConnectionPool implements ConnectionPool {
                     logger.warn("No available connection, waiting");
                     waitConnection.await();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    // 理论上不会收到中断信号
+                    throw new RuntimeException(e);
                 }
             }
             Connection connection;
@@ -134,7 +135,7 @@ public class SuConnectionPool implements ConnectionPool {
                     availableConnections.add(connection);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.warn("Add connection error: %s".formatted(e));
             }
             logger.info("Add connection current available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
             return true;
@@ -161,7 +162,7 @@ public class SuConnectionPool implements ConnectionPool {
                 try {
                     connection.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.warn("Close connection error: %s".formatted(e));
                 }
             }
             logger.info("Remove connection current available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
@@ -203,6 +204,7 @@ public class SuConnectionPool implements ConnectionPool {
                 logger.info("Daemon paused available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
                 waitBalance.await();
             } catch (InterruptedException e) {
+                // 理论上不会收到中断信号
                 throw new RuntimeException(e);
             }
             logger.info("Daemon running available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
@@ -222,6 +224,7 @@ public class SuConnectionPool implements ConnectionPool {
             lock.lock();
             waitDaemon.await();
         } catch (InterruptedException e) {
+            // 理论上不会收到中断信号
             throw new RuntimeException(e);
         } finally {
             lock.unlock();

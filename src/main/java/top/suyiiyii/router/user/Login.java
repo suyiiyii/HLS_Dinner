@@ -47,8 +47,7 @@ public class Login extends BaseHttpServlet {
             logger.error("登录失败：" + e.getMessage());
             resp.setStatus(401);
             respWrite(resp, e.getMessage());
-            e.printStackTrace();
-            return;
+            throw new RuntimeException("登录失败：" + e);
         }
 
         String secret = configManger.get("secret");
