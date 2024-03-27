@@ -77,6 +77,7 @@ public class ModelManger {
         tables.add(table);
         SqlExecutor executor = connectionManger.getSqlExecutor();
         boolean value = executor.createTable(table);
+        executor.close();
         if (value) {
             logger.warn("表 " + tableName + " 不存在，已成功创建");
         }

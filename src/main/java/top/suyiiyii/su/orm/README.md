@@ -1,6 +1,6 @@
 # SuOrm 框架
 
-## `version 1.0.1`
+## `version 1.0.2`
 
 # features
 
