@@ -44,8 +44,10 @@ public class Register {
         User user = new User();
         user.username = username;
         user.password = top.suyiiyii.security.Login.hashPassword(password);
+        user.role = "user";
 
         user = users.createUser(user);
+        user = users.getUserByUsername(username);
         logger.info("用户注册成功：" + username);
         return user;
     }

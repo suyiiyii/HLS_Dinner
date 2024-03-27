@@ -34,7 +34,7 @@ public class Login {
 
         TokenData tokenData = new TokenData();
         tokenData.uid = user.id;
-        tokenData.role = "admin";
+        tokenData.role = user.role;
         return tokenData;
     }
 
