@@ -4,8 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 /**
  * jwt工具类
@@ -18,20 +17,19 @@ public class JwtUtils {
     /**
      * 创建token
      *
-     * @param data    数据
-     * @param secret  密钥
-     * @param expTime 过期时间
+     * @param data      数据
+     * @param secret    密钥
+     * @param expSecond 过期时间
      * @return token
      * @throws IOException 异常
      */
-    public static String createToken(Object data, String secret, int expTime) throws IOException {
-        Map<String, String> payload = new HashMap<>();
-        payload.put("sub", UniversalUtils.obj2Json(data));
-        long exp = System.currentTimeMillis() + expTime;
-        payload.put("exp", String.valueOf(exp));
+    public static String createToken(Object data, String secret, int expSecond) throws IOException {
+        String sub = UniversalUtils.obj2Json(data);
+        long exp = System.currentTimeMillis() + expSecond * 1000L;
+        Date expDate = new Date(exp);
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create().withPayload(payload).sign(algorithm);
+            String token = JWT.create().withSubject(sub).withExpiresAt(expDate).sign(algorithm);
             return token;
         } catch (Exception e) {
             throw new IOException("create token failed");
