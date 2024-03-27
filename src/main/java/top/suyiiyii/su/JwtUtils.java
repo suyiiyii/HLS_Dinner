@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * jwt工具类
+ * 用于生成token和验证token
+ * 依赖auth0的jwt库
+ *
+ * @author suyiiyii
+ */
 public class JwtUtils {
     /**
      * 创建token

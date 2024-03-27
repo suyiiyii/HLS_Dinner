@@ -13,7 +13,10 @@ import top.suyiiyii.su.orm.utils.ConnectionBuilder;
 /**
  * 依赖注入
  * 注入部分依赖到 ServletContext
+ *
+ * @author suyiiyii
  */
+
 @WebListener
 public class ContextInitializer implements ServletContextListener {
     Log logger = LogFactory.getLog(ContextInitializer.class);

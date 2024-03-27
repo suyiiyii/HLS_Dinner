@@ -8,7 +8,11 @@ import top.suyiiyii.Utils;
 
 import java.io.IOException;
 
-
+/**
+ * HealthCheck Servlet
+ *
+ * @author suyiiyii
+ */
 @WebServlet("/health_check")
 public class HealthCheck extends HttpServlet {
     @Override

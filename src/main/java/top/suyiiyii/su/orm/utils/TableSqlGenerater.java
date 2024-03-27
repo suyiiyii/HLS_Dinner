@@ -6,6 +6,8 @@ import top.suyiiyii.su.orm.struct.Table;
 
 /**
  * 生成有关表的sql
+ *
+ * @author suyiiyii
  */
 public class TableSqlGenerater {
     /**
@@ -20,7 +22,7 @@ public class TableSqlGenerater {
             sql.append(" `").append(column.name).append("` ");
             // 字段类型
             sql.append(" ").append(column.type);
-            if (column.type.equals("varchar")) {
+            if ("varchar".equals(column.type)) {
                 sql.append("(").append(column.stringLength).append(")");
             }
             // 是否非空

@@ -12,6 +12,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 连接池
+ * 用于管理数据库连接
+ *
+ * @author suyiiyii
+ */
 public class SuConnectionPool implements ConnectionPool {
     /**
      * 线程安全：所有的操作都在锁内完成，使用消息通知来唤醒线程，保证线程安全
@@ -28,6 +34,10 @@ public class SuConnectionPool implements ConnectionPool {
     private final Set<Connection> availableConnections;
     // 已使用连接池
     private final Set<Connection> usedConnections;
+    // 每次增加或减少的步进
+    private final int STEP = 2;
+    // 空闲连接数量修改的阈值
+    private final int THRESHOLD = 3;
     // 锁
     Lock lock = new ReentrantLock();
     // 等待连接信号
@@ -36,10 +46,6 @@ public class SuConnectionPool implements ConnectionPool {
     private final Condition waitBalance = lock.newCondition();
     // 等待守护线程启动完毕信号
     private final Condition waitDaemon = lock.newCondition();
-    // 每次增加或减少的步进
-    private final int STEP = 2;
-    // 空闲连接数量修改的阈值
-    private final int THRESHOLD = 3;
 
     public SuConnectionPool(int maxSize, int minSize, Callable<Connection> newConnection) {
         lock.lock();

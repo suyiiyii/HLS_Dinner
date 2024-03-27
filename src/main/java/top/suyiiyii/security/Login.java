@@ -2,16 +2,24 @@ package top.suyiiyii.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.su.orm.core.Session;
 import top.suyiiyii.dao.Users;
 import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.exception.UserAuthenticationException;
 import top.suyiiyii.models.User;
 import top.suyiiyii.schemas.TokenData;
+import top.suyiiyii.su.orm.core.Session;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Login
+ * 登录service
+ * 验证用户名和密码
+ * 返回TokenData
+ *
+ * @author suyiiyii
+ */
 public class Login {
     private static final Log logger = LogFactory.getLog(Register.class);
 

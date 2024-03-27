@@ -14,7 +14,7 @@ import java.io.PrintWriter;
  * 封装了几个经常要用到的方法，比如读取请求体和写响应体
  *
  * @version 1.5
- * @auther Suyiiyii
+ * @auther suyiiyii
  * @date 2023.3.25
  */
 public class WebUtils {
@@ -71,10 +71,14 @@ public class WebUtils {
 
     public static void respWrite(HttpServletResponse resp, Object object) throws IOException {
         // 设置允许跨域的响应头
-        resp.setHeader("Access-Control-Allow-Origin", "*"); // 允许任何域名发起请求，也可以指定具体的域名
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS"); // 允许的HTTP方法
-        resp.setHeader("Access-Control-Max-Age", "3600"); // 预检请求缓存时间（单位：秒）
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // 允许自定义请求头
+        // 允许任何域名发起请求，也可以指定具体的域名
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        // 允许的HTTP方法
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        // 预检请求缓存时间（单位：秒）
+        resp.setHeader("Access-Control-Max-Age", "3600");
+        // 允许自定义请求头
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
         resp.setContentType("application/json");
         PrintWriter pw = resp.getWriter();

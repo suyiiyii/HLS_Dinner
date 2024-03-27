@@ -12,6 +12,8 @@ import java.sql.SQLException;
 /**
  * sql执行器
  * 对session负责（session的工具类）
+ *
+ * @author suyiiyii
  */
 public class SqlExecutor {
     /**

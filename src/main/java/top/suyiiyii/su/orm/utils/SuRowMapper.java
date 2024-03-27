@@ -25,6 +25,7 @@ import static top.suyiiyii.su.UniversalUtils.camlToDown;
  * SuRowMapper 类定义了静态方法，用于处理从 ResultSet 映射到实体类的相关操作。
  *
  * @param <T> 泛型参数，表示需要映射到的目标实体类类型
+ * @author suyiiyii
  */
 public class SuRowMapper<T> {
     /**
@@ -39,7 +40,7 @@ public class SuRowMapper<T> {
      * @param resultSet   数据库查询结果集
      * @return 包含实体对象的列表
      */
-    public static <T> List<T> RowMapper(Class<T> entityClazz, ResultSet resultSet) {
+    public static <T> List<T> rowMapper(Class<T> entityClazz, ResultSet resultSet) {
         // 实例化列表以存储映射后的实体对象
         List<T> entityList = new ArrayList<>();
 

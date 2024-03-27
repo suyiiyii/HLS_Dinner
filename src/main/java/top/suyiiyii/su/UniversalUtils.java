@@ -3,6 +3,11 @@ package top.suyiiyii.su;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+/**
+ * 通用工具类
+ *
+ * @author suyiiyii
+ */
 public class UniversalUtils {
     /**
      * 把对象转换成json字符串

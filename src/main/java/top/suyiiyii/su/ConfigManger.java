@@ -8,6 +8,13 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 配置文件管理器
+ * 读取配置文件，如果没有找到则从环境变量中读取
+ * 如果环境变量中也没有找到则抛出异常
+ *
+ * @author suyiiyii
+ */
 public class ConfigManger {
     private static final Log logger = LogFactory.getLog(ConfigManger.class);
     Map<String, String> config = new ConcurrentHashMap<>();

@@ -12,6 +12,8 @@ import static top.suyiiyii.su.UniversalUtils.camlToDown;
  * 列对象
  * 代表数据库中的某一列
  * 传入被ColumnSetting注解的字段，可以自动获取额外的信息
+ *
+ * @author suyiiyii
  */
 public class Column {
     // 类型到数据库类型的映射

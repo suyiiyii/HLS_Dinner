@@ -6,6 +6,8 @@ import java.lang.annotation.Target;
 
 /**
  * 字段的更多信息的注解
+ *
+ * @author suyiiyii
  */
 @Target(ElementType.FIELD)
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)

@@ -57,7 +57,7 @@ public class Session {
         String tableName = modelManger.getClass2TableName().get(clazz);
         String sql = RowSqlGenerater.selectAll(tableName);
         ResultSet resultSet = sqlExecutor.query(sql);
-        return SuRowMapper.RowMapper(clazz, resultSet);
+        return SuRowMapper.rowMapper(clazz, resultSet);
     }
 
 
@@ -76,7 +76,7 @@ public class Session {
         PreparedStatement preparedStatement = sqlExecutor.getPreparedStatement(sql);
         preparedStatement.setObject(1, value);
         ResultSet resultSet = sqlExecutor.query(preparedStatement);
-        return SuRowMapper.RowMapper(clazz, resultSet);
+        return SuRowMapper.rowMapper(clazz, resultSet);
     }
 
     /**
@@ -247,7 +247,7 @@ public class Session {
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             ResultSet rs = sqlExecutor.query(ps);
-            List<T> list = (List<T>) SuRowMapper.RowMapper(warpper.getClazz(), rs);
+            List<T> list = (List<T>) SuRowMapper.rowMapper(warpper.getClazz(), rs);
             for (T obj : list) {
                 cache.put(obj, UniversalUtils.clone(obj));
             }
@@ -307,7 +307,6 @@ public class Session {
         cache.clear();
         if (!toUpdate.isEmpty()) {
             for (Object obj : toUpdate) {
-//                this.add(obj);
                 this.update(obj);
             }
         }

@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 /**
  * 异常处理过滤器
  * 捕获所有异常并返回异常信息
+ *
+ * @author suyiiyii
  */
 public class ExceptionHandlerFilter implements Filter {
 

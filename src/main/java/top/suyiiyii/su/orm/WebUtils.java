@@ -8,6 +8,8 @@ import top.suyiiyii.su.orm.core.Session;
 /**
  * WebUtils
  * 配合servlet使用
+ *
+ * @author suyiiyii
  */
 public class WebUtils {
 
