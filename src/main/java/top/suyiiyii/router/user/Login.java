@@ -1,24 +1,18 @@
 package top.suyiiyii.router.user;
 
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.schemas.Token;
 import top.suyiiyii.schemas.TokenData;
-import top.suyiiyii.su.ConfigManger;
 import top.suyiiyii.su.JwtUtils;
-import top.suyiiyii.su.orm.core.Session;
+import top.suyiiyii.su.servlet.BaseHttpServlet;
 
 import java.io.IOException;
 
 import static top.suyiiyii.su.WebUtils.respWrite;
-import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
-import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
 
 /**
  * 用户登录Servlet
@@ -27,10 +21,8 @@ import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
  * @author suyiiyii
  */
 @WebServlet("/user/login")
-public class Login extends HttpServlet {
+public class Login extends BaseHttpServlet {
     static final Log logger = LogFactory.getLog(Login.class);
-    Session db;
-    ConfigManger config;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -59,20 +51,13 @@ public class Login extends HttpServlet {
             return;
         }
 
-        String secret = config.get("secret");
+        String secret = configManger.get("secret");
         token.access_token = JwtUtils.createToken(request.username, secret, 60 * 10);
 
         logger.info("签发token：" + token.access_token);
 
 
         respWrite(resp, token);
-    }
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        this.db = getSessionFromConfig(config);
-        this.config = getConfigMangerFromConfig(config);
     }
 
 }
