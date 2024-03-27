@@ -16,6 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author suyiiyii
  */
 public class ConfigManger {
+    /**
+     * 线程安全：使用ConcurrentHashMap，同时使用computeIfAbsent方法，保证线程安全
+     */
     private static final Log logger = LogFactory.getLog(ConfigManger.class);
     Map<String, String> config = new ConcurrentHashMap<>();
 

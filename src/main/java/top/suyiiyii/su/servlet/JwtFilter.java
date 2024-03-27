@@ -16,6 +16,7 @@ import static top.suyiiyii.su.JwtUtils.verifyToken;
 /**
  * jwt 校验过滤器
  * 如果校验成功，注入tokenData到servletRequest上下文
+ * 过滤器应该覆盖所有接口，但使用白名单跳过登录注册接口
  *
  * @author suyiiyii
  */
@@ -31,15 +32,23 @@ public class JwtFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        // 获取token
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         logger.info("JwtFilter: " + req.getRequestURI());
+        // 白名单机制，跳过登录注册接口
+        if (req.getRequestURI().equals("/user/login") || req.getRequestURI().equals("/user/register")) {
+            logger.info("跳过登录注册接口");
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         String authHeader = req.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new ServletException("缺少Authorization头或者Authorization头不以Bearer开头");
         }
         String token = authHeader.substring(7);
-        String tokenStr = verifyToken(token, configManger.get("secret"));
+
         // 验证token
+        String tokenStr = verifyToken(token, configManger.get("secret"));
         if (!tokenStr.isEmpty()) {
             // 注入tokenData
             TokenData tokenData = UniversalUtils.json2Obj(tokenStr, TokenData.class);
