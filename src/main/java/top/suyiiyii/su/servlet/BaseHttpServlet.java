@@ -30,8 +30,8 @@ public class BaseHttpServlet extends HttpServlet {
      *
      * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception occurs that interferes with the servlet's normal operation
+     * @throws IOException      if an input or output exception occurs
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -49,16 +49,12 @@ public class JwtFilter implements Filter {
 
         // 验证token
         String tokenStr = verifyToken(token, configManger.get("secret"));
-        if (!tokenStr.isEmpty()) {
-            // 注入tokenData
-            TokenData tokenData = UniversalUtils.json2Obj(tokenStr, TokenData.class);
-            req.setAttribute("tokenData", tokenData);
-            logger.info("token verify success");
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            System.out.println("token verify failed");
-            throw new ServletException("token验证失败");
-        }
+
+        // 注入tokenData
+        TokenData tokenData = UniversalUtils.json2Obj(tokenStr, TokenData.class);
+        req.setAttribute("tokenData", tokenData);
+        logger.info("token verify success");
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

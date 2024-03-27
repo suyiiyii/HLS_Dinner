@@ -3,6 +3,7 @@ package top.suyiiyii.su;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 import java.util.Date;
 
@@ -29,8 +30,7 @@ public class JwtUtils {
         Date expDate = new Date(exp);
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create().withSubject(sub).withExpiresAt(expDate).sign(algorithm);
-            return token;
+            return JWT.create().withSubject(sub).withExpiresAt(expDate).sign(algorithm);
         } catch (Exception e) {
             throw new IOException("create token failed");
         }
@@ -51,7 +51,7 @@ public class JwtUtils {
             JWT.require(algorithm).build().verify(token);
             return JWT.decode(token).getClaim("sub").asString();
         } catch (Exception e) {
-            throw new IOException("verify token failed");
+            throw new AuthenticationException("verify token failed");
         }
     }
 }

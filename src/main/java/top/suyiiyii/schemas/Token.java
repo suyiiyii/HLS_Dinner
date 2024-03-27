@@ -2,7 +2,7 @@ package top.suyiiyii.schemas;
 
 /**
  * Token
- * 用于存储token
+ * 用于返回token的schema
  *
  * @author suyiiyii
  */
