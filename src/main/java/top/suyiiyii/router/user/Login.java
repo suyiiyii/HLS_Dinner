@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.ConfigManger;
-import top.suyiiyii.Su.JwtUtils;
-import top.suyiiyii.Su.orm.core.Session;
+import top.suyiiyii.su.ConfigManger;
+import top.suyiiyii.su.JwtUtils;
+import top.suyiiyii.su.orm.core.Session;
 import top.suyiiyii.schemas.Token;
 import top.suyiiyii.schemas.TokenData;
 
 import java.io.IOException;
 
-import static top.suyiiyii.Su.orm.WebUtils.getConfigMangerFromConfig;
-import static top.suyiiyii.Su.orm.WebUtils.getSessionFromConfig;
+import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
+import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
 import static top.suyiiyii.Utils.respWrite;
 
 @WebServlet("/user/login")

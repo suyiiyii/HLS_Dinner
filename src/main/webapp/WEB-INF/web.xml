@@ -10,7 +10,7 @@
     <!-- 注册Filter -->
     <filter>
         <filter-name>OptionsFilter</filter-name>
-        <filter-class>top.suyiiyii.Su.servlet.OptionsFilter</filter-class>
+        <filter-class>top.suyiiyii.su.servlet.OptionsFilter</filter-class>
 
         <!-- 可选：添加初始化参数 -->
         <!--        <init-param>-->
@@ -20,11 +20,11 @@
     </filter>
     <filter>
         <filter-name>ExceptionHandlerFilter</filter-name>
-        <filter-class>top.suyiiyii.Su.servlet.ExceptionHandlerFilter</filter-class>
+        <filter-class>top.suyiiyii.su.servlet.ExceptionHandlerFilter</filter-class>
     </filter>
     <filter>
         <filter-name>JwtFilter</filter-name>
-        <filter-class>top.suyiiyii.Su.servlet.JwtFilter</filter-class>
+        <filter-class>top.suyiiyii.su.servlet.JwtFilter</filter-class>
     </filter>
 
     <!-- 将Filter映射到特定的URL或者所有请求 -->

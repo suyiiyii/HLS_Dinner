@@ -2,7 +2,7 @@ package top.suyiiyii.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.orm.core.Session;
+import top.suyiiyii.su.orm.core.Session;
 import top.suyiiyii.dao.Users;
 import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.models.User;
