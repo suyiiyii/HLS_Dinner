@@ -21,7 +21,7 @@ import java.io.IOException;
 public class BaseHttpServlet extends HttpServlet {
     protected Session db;
     protected ConfigManger configManger;
-    protected int uid;
+    protected int uid = -1;
 
     /**
      * 依赖注入
