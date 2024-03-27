@@ -13,6 +13,8 @@ import java.util.List;
  * 支持链式调用
  * 调用结束方法后会执行传入的回调函数并返回结果
  * 建议使用lambda表达式的方式传入回调函数
+ *
+ * @author suyiiyii
  */
 public class Warpper {
     /**
@@ -24,11 +26,11 @@ public class Warpper {
     private final List<String> setStatement = new ArrayList<>();
     // 参数列表
     private final List<Object> params = new ArrayList<>();
+    private final CallBack callBack;
+    private final Class<?> clazz;
     // 分页信息
     private int pageNum = -1;
     private int pageSize = -1;
-    private final CallBack callBack;
-    private final Class<?> clazz;
 
     public Warpper(Class<?> clazz, CallBack callBack) {
         this.clazz = clazz;

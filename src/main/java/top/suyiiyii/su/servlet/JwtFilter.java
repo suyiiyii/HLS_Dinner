@@ -13,6 +13,8 @@ import static top.suyiiyii.su.JwtUtils.verifyToken;
 /**
  * jwt 校验过滤器
  * 如果校验成功，注入tokenData到servletRequest
+ *
+ * @author suyiiyii
  */
 public class JwtFilter implements Filter {
     Log logger = LogFactory.getLog(JwtFilter.class);

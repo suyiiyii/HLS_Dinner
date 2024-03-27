@@ -11,6 +11,8 @@ import java.io.IOException;
 /**
  * 允许所有OPTIONS请求通过
  * 解决跨域问题
+ *
+ * @author suyiiyii
  */
 @WebFilter("/*")
 public class OptionsFilter implements Filter {
@@ -25,7 +27,7 @@ public class OptionsFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        if (req.getMethod().equals("OPTIONS")) {
+        if ("OPTIONS".equals(req.getMethod())) {
             WebUtils.respWrite((HttpServletResponse) servletResponse, "ok from optionsFilter");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
