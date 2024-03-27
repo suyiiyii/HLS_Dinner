@@ -12,8 +12,8 @@ import top.suyiiyii.su.orm.core.Session;
 
 import java.io.IOException;
 
-import static top.suyiiyii.Utils.readRequestBody2Obj;
-import static top.suyiiyii.Utils.respWrite;
+import static top.suyiiyii.su.WebUtils.readRequestBody2Obj;
+import static top.suyiiyii.su.WebUtils.respWrite;
 import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
 import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
 

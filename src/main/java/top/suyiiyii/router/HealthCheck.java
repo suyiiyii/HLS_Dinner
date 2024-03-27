@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import top.suyiiyii.Utils;
+import top.suyiiyii.su.WebUtils;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class HealthCheck extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HealthCheckResponse healthCheckResponse = new HealthCheckResponse("heathy");
-        Utils.respWrite(resp, healthCheckResponse);
+        WebUtils.respWrite(resp, healthCheckResponse);
     }
 
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
 import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
-import static top.suyiiyii.Utils.respWrite;
+import static top.suyiiyii.su.WebUtils.respWrite;
 
 @WebServlet("/user/login")
 public class Login extends HttpServlet {
