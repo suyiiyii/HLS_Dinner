@@ -4,10 +4,8 @@ import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import top.suyiiyii.su.ConfigManger;
+import top.suyiiyii.su.orm.core.ModelManger;
 import top.suyiiyii.su.orm.core.Session;
-
-import static top.suyiiyii.su.orm.WebUtils.getConfigMangerFromConfig;
-import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
 
 /**
  * BaseHttpServlet
@@ -18,11 +16,13 @@ import static top.suyiiyii.su.orm.WebUtils.getSessionFromConfig;
 public class BaseHttpServlet extends HttpServlet {
     protected Session db;
     protected ConfigManger configManger;
+    protected String username;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.db = getSessionFromConfig(config);
-        this.configManger = getConfigMangerFromConfig(config);
+        this.db = ((ModelManger) config.getServletContext().getAttribute("ModelManger")).getSession();
+        this.configManger = (ConfigManger) config.getServletContext().getAttribute("ConfigManger");
+
     }
 }
