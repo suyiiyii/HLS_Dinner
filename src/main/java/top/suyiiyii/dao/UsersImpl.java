@@ -2,7 +2,7 @@ package top.suyiiyii.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.orm.core.Session;
+import top.suyiiyii.su.orm.core.Session;
 import top.suyiiyii.models.User;
 
 import java.util.NoSuchElementException;

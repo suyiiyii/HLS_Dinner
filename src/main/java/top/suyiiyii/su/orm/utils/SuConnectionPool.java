@@ -1,8 +1,8 @@
-package top.suyiiyii.Su.orm.utils;
+package top.suyiiyii.su.orm.utils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.orm.struct.ConnectionPool;
+import top.suyiiyii.su.orm.struct.ConnectionPool;
 
 import java.sql.Connection;
 import java.util.HashSet;

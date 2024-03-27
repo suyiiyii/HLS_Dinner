@@ -1,4 +1,4 @@
-package top.suyiiyii.Su.orm.annotation;
+package top.suyiiyii.su.orm.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

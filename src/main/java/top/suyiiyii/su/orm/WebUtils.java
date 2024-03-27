@@ -1,9 +1,9 @@
-package top.suyiiyii.Su.orm;
+package top.suyiiyii.su.orm;
 
 import jakarta.servlet.ServletConfig;
-import top.suyiiyii.Su.ConfigManger;
-import top.suyiiyii.Su.orm.core.ModelManger;
-import top.suyiiyii.Su.orm.core.Session;
+import top.suyiiyii.su.ConfigManger;
+import top.suyiiyii.su.orm.core.ModelManger;
+import top.suyiiyii.su.orm.core.Session;
 
 /**
  * WebUtils

@@ -1,4 +1,4 @@
-package top.suyiiyii.Su.servlet;
+package top.suyiiyii.su.servlet;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -6,9 +6,9 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.ConfigManger;
-import top.suyiiyii.Su.orm.core.ModelManger;
-import top.suyiiyii.Su.orm.utils.ConnectionBuilder;
+import top.suyiiyii.su.ConfigManger;
+import top.suyiiyii.su.orm.core.ModelManger;
+import top.suyiiyii.su.orm.utils.ConnectionBuilder;
 
 /**
  * 依赖注入

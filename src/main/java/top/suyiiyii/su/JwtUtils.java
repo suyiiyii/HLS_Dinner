@@ -1,4 +1,4 @@
-package top.suyiiyii.Su;
+package top.suyiiyii.su;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

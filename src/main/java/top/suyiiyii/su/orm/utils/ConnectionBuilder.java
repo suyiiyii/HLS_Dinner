@@ -1,4 +1,4 @@
-package top.suyiiyii.Su.orm.utils;
+package top.suyiiyii.su.orm.utils;
 
 import java.sql.Connection;
 

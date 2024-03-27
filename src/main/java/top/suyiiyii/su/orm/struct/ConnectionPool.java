@@ -1,4 +1,4 @@
-package top.suyiiyii.Su.orm.struct;
+package top.suyiiyii.su.orm.struct;
 
 import java.sql.Connection;
 

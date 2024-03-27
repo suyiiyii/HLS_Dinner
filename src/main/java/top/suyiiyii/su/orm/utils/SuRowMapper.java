@@ -10,7 +10,7 @@
  * @version 1.0
  * @date 2023.3.20
  */
-package top.suyiiyii.Su.orm.utils;
+package top.suyiiyii.su.orm.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static top.suyiiyii.Su.UniversalUtils.camlToDown;
+import static top.suyiiyii.su.UniversalUtils.camlToDown;
 
 /**
  * SuRowMapper 类定义了静态方法，用于处理从 ResultSet 映射到实体类的相关操作。

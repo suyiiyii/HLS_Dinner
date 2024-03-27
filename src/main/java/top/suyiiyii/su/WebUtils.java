@@ -1,4 +1,4 @@
-package top.suyiiyii.Su;
+package top.suyiiyii.su;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

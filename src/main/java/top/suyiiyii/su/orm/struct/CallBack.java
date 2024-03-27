@@ -1,6 +1,6 @@
-package top.suyiiyii.Su.orm.struct;
+package top.suyiiyii.su.orm.struct;
 
-import top.suyiiyii.Su.orm.core.Warpper;
+import top.suyiiyii.su.orm.core.Warpper;
 
 import java.sql.SQLException;
 

@@ -1,8 +1,8 @@
-package top.suyiiyii.Su;
+package top.suyiiyii.su;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.exception.ConfigNotFound;
+import top.suyiiyii.su.exception.ConfigNotFound;
 
 import java.io.InputStream;
 import java.util.Map;

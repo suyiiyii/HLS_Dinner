@@ -1,6 +1,6 @@
-package top.suyiiyii.Su.orm.core;
+package top.suyiiyii.su.orm.core;
 
-import top.suyiiyii.Su.orm.struct.CallBack;
+import top.suyiiyii.su.orm.struct.CallBack;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

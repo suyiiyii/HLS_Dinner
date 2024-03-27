@@ -1,7 +1,7 @@
 package top.suyiiyii.models;
 
-import top.suyiiyii.Su.orm.annotation.ColumnSetting;
-import top.suyiiyii.Su.orm.annotation.TableRegister;
+import top.suyiiyii.su.orm.annotation.ColumnSetting;
+import top.suyiiyii.su.orm.annotation.TableRegister;
 
 @TableRegister("user")
 public class User {

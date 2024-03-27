@@ -1,7 +1,7 @@
-package top.suyiiyii.Su.orm.utils;
+package top.suyiiyii.su.orm.utils;
 
-import top.suyiiyii.Su.orm.struct.Column;
-import top.suyiiyii.Su.orm.struct.Table;
+import top.suyiiyii.su.orm.struct.Column;
+import top.suyiiyii.su.orm.struct.Table;
 
 /**
  * 有关行的sql生成

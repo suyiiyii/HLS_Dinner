@@ -1,10 +1,10 @@
-package top.suyiiyii.Su.servlet;
+package top.suyiiyii.su.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import top.suyiiyii.Su.WebUtils;
+import top.suyiiyii.su.WebUtils;
 
 import java.io.IOException;
 

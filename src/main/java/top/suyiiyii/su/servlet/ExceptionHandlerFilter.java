@@ -1,11 +1,11 @@
-package top.suyiiyii.Su.servlet;
+package top.suyiiyii.su.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.WebUtils;
+import top.suyiiyii.su.WebUtils;
 
 import java.io.IOException;
 import java.util.Arrays;

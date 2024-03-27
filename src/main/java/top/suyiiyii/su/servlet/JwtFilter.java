@@ -1,4 +1,4 @@
-package top.suyiiyii.Su.servlet;
+package top.suyiiyii.su.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 
-import static top.suyiiyii.Su.JwtUtils.verifyToken;
+import static top.suyiiyii.su.JwtUtils.verifyToken;
 
 
 /**

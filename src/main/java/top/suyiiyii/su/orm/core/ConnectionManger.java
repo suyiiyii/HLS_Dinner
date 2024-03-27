@@ -1,8 +1,8 @@
-package top.suyiiyii.Su.orm.core;
+package top.suyiiyii.su.orm.core;
 
-import top.suyiiyii.Su.orm.struct.ConnectionPool;
-import top.suyiiyii.Su.orm.utils.SqlExecutor;
-import top.suyiiyii.Su.orm.utils.SuConnectionPool;
+import top.suyiiyii.su.orm.struct.ConnectionPool;
+import top.suyiiyii.su.orm.utils.SqlExecutor;
+import top.suyiiyii.su.orm.utils.SuConnectionPool;
 
 import java.sql.Connection;
 import java.util.concurrent.Callable;

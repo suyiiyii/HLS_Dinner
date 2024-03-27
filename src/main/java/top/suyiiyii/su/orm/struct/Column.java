@@ -1,12 +1,12 @@
-package top.suyiiyii.Su.orm.struct;
+package top.suyiiyii.su.orm.struct;
 
-import top.suyiiyii.Su.orm.annotation.ColumnSetting;
+import top.suyiiyii.su.orm.annotation.ColumnSetting;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static top.suyiiyii.Su.UniversalUtils.camlToDown;
+import static top.suyiiyii.su.UniversalUtils.camlToDown;
 
 /**
  * 列对象

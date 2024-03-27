@@ -1,10 +1,10 @@
-package top.suyiiyii.Su.orm.core;
+package top.suyiiyii.su.orm.core;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.Su.orm.annotation.TableRegister;
-import top.suyiiyii.Su.orm.struct.Table;
-import top.suyiiyii.Su.orm.utils.SqlExecutor;
+import top.suyiiyii.su.orm.annotation.TableRegister;
+import top.suyiiyii.su.orm.struct.Table;
+import top.suyiiyii.su.orm.utils.SqlExecutor;
 
 import java.io.File;
 import java.net.URL;

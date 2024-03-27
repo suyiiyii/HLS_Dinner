@@ -1,4 +1,4 @@
-package top.suyiiyii.Su;
+package top.suyiiyii.su;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

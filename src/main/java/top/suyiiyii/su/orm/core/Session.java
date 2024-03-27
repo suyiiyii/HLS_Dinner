@@ -1,10 +1,10 @@
-package top.suyiiyii.Su.orm.core;
+package top.suyiiyii.su.orm.core;
 
-import top.suyiiyii.Su.UniversalUtils;
-import top.suyiiyii.Su.orm.struct.Table;
-import top.suyiiyii.Su.orm.utils.RowSqlGenerater;
-import top.suyiiyii.Su.orm.utils.SqlExecutor;
-import top.suyiiyii.Su.orm.utils.SuRowMapper;
+import top.suyiiyii.su.UniversalUtils;
+import top.suyiiyii.su.orm.struct.Table;
+import top.suyiiyii.su.orm.utils.RowSqlGenerater;
+import top.suyiiyii.su.orm.utils.SqlExecutor;
+import top.suyiiyii.su.orm.utils.SuRowMapper;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;

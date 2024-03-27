@@ -1,7 +1,7 @@
-package top.suyiiyii.Su.orm.utils;
+package top.suyiiyii.su.orm.utils;
 
-import top.suyiiyii.Su.orm.core.ConnectionManger;
-import top.suyiiyii.Su.orm.struct.Table;
+import top.suyiiyii.su.orm.core.ConnectionManger;
+import top.suyiiyii.su.orm.struct.Table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
