@@ -16,7 +16,7 @@ public interface TablesDAO extends BaseDAO {
      *
      * @return 所有桌子
      */
-    public List<Table> getTables();
+    List<Table> getTables();
 
     /**
      * 根据id获取桌子
@@ -24,7 +24,7 @@ public interface TablesDAO extends BaseDAO {
      * @param id 桌子id
      * @return 桌子
      */
-    public Table getTableById(int id);
+    Table getTableById(int id);
 
     /**
      * 根据name获取桌子
@@ -32,7 +32,15 @@ public interface TablesDAO extends BaseDAO {
      * @param name 桌子name
      * @return 桌子
      */
-    public Table getTableByName(String name);
+    Table getTableByName(String name);
+
+    /**
+     * 根据uid获取桌子
+     *
+     * @param uid 用户id
+     * @return 桌子
+     */
+    Table getTableByUid(int uid);
 
     /**
      * 创建桌子
@@ -40,7 +48,7 @@ public interface TablesDAO extends BaseDAO {
      * @param table 桌子
      * @return 桌子
      */
-    public Table createTable(Table table);
+    Table createTable(Table table);
 
     /**
      * 更新桌子
@@ -48,13 +56,13 @@ public interface TablesDAO extends BaseDAO {
      * @param table 桌子
      * @return 桌子
      */
-    public Table updateTable(Table table);
+    Table updateTable(Table table);
 
     /**
      * 删除桌子
      *
      * @param id 桌子id
      */
-    public void deleteTable(int id);
+    void deleteTable(int id);
 
 }

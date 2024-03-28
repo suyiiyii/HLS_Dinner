@@ -46,6 +46,14 @@ public class TablesImpl extends BaseImpl implements TablesDAO {
         }
     }
 
+    public Table getTableByUid(int uid) {
+        try {
+            return db.query(Table.class).eq("uid", uid).first();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Table createTable(Table table) {
         try {
