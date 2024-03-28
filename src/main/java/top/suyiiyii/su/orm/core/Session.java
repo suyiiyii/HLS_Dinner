@@ -251,7 +251,7 @@ public class Session {
     public <T> Warpper query(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("SELECT * FROM " + tableName + " ");
+            String sql = warpper.buildSql("SELECT * FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             ResultSet rs = sqlExecutor.query(ps);
@@ -276,7 +276,7 @@ public class Session {
     public <T> Warpper delete(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("DELETE FROM " + tableName + " ");
+            String sql = warpper.buildSql("DELETE FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             return sqlExecutor.execute(ps);
@@ -295,7 +295,7 @@ public class Session {
     public <T> Warpper update(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("UPDATE " + tableName + " ");
+            String sql = warpper.buildSql("UPDATE `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             return sqlExecutor.execute(ps);

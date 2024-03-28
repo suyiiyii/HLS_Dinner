@@ -35,7 +35,7 @@ public class RowSqlGenerater {
             if (column.isAutoIncrement) {
                 continue;
             }
-            sql.append(column.name).append(",");
+            sql.append(" `").append(column.name).append("` ").append(",");
             sql2.append("?").append(",");
         }
         sql.deleteCharAt(sql.length() - 1);
@@ -63,7 +63,7 @@ public class RowSqlGenerater {
         for (int i = 0; i < table.columns.size(); i++) {
             Column column = table.columns.get(i);
             if (column.isPrimaryKey) {
-                sql.append(column.name).append(" = ?");
+                sql.append(" `").append(column.name).append("` ").append(" = ?");
                 break;
             }
         }

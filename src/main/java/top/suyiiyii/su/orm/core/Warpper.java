@@ -61,7 +61,7 @@ public class Warpper {
      * @return this
      */
     public Warpper eq(String key, Object value) {
-        whereStatement.add(key + " = ?");
+        whereStatement.add('`' + key + '`' + " = ?");
         params.add(value);
         return this;
     }
@@ -74,7 +74,7 @@ public class Warpper {
      * @return this
      */
     public Warpper neq(String key, Object value) {
-        whereStatement.add(key + " != ?");
+        whereStatement.add('`' + key + '`' + " != ?");
         params.add(value);
         return this;
     }
@@ -87,7 +87,7 @@ public class Warpper {
      * @return this
      */
     public Warpper like(String key, Object value) {
-        whereStatement.add(key + " LIKE ?");
+        whereStatement.add('`' + key + '`' + " LIKE ?");
         params.add(value);
         return this;
     }
@@ -101,7 +101,7 @@ public class Warpper {
      * @return this
      */
     public Warpper fuzzLike(String key, String value) {
-        whereStatement.add(key + " LIKE ?");
+        whereStatement.add('`' + key + '`' + " LIKE ?");
         params.add("%" + value + "%");
         return this;
     }
@@ -127,7 +127,7 @@ public class Warpper {
      * @return this
      */
     public Warpper set(String key, Object value) {
-        setStatement.add(key + " = ?");
+        setStatement.add('`' + key + '`' + " = ?");
         params.add(value);
         return this;
     }
