@@ -34,7 +34,7 @@ public class ConfigManger {
                 config.put(key, properties.getProperty(key));
             }
             logger.info("读取配置文件成功，一共 " + config.size() + " 条配置");
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("读取配置文件失败，将会从环境变量读取配置 " + e);
         }
     }
