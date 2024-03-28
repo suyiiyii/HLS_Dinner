@@ -68,4 +68,13 @@ public class TablesImpl extends BaseImpl implements TablesDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteTable(int id) {
+        try {
+            db.delete(Table.class).eq("id", id).execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

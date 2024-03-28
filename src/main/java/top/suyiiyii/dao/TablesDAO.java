@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author suyiiyii
  */
-public interface TablesDAO extends BaseDAO{
+public interface TablesDAO extends BaseDAO {
     /**
      * 获取所有桌子
      *
@@ -49,4 +49,12 @@ public interface TablesDAO extends BaseDAO{
      * @return 桌子
      */
     public Table updateTable(Table table);
+
+    /**
+     * 删除桌子
+     *
+     * @param id 桌子id
+     */
+    public void deleteTable(int id);
+
 }
