@@ -1,4 +1,4 @@
-package top.suyiiyii.router;
+package top.suyiiyii.router.table;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -58,29 +58,6 @@ public class TableServlet extends BaseHttpServlet {
         WebUtils.respWrite(resp, table);
     }
 
-    /**
-     * 更新一张桌子
-     * 直接操作数据库，只有管理员可以操作
-     *
-     * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
-     * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
-     * @throws IOException
-     */
-    @Override
-    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Table table = WebUtils.readRequestBody2Obj(req, Table.class);
-
-        if (role.equals("admin")) {
-            // 更新表
-            tableService.updateTable(table);
-            WebUtils.respWrite(resp, table);
-
-        } else if (role.equals("user")) {
-
-        } else {
-            throw new RuntimeException("Permission denied");
-        }
-    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
