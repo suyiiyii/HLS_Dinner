@@ -7,8 +7,10 @@ import top.suyiiyii.su.orm.struct.Table;
 import top.suyiiyii.su.orm.utils.SqlExecutor;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.Callable;
 
@@ -68,7 +70,7 @@ public class ModelManger {
      * @param tableName   表名
      * @param entityClass 实体类
      */
-    private void register(String tableName, Class<?> entityClass) {
+    private void register(String tableName, Class<?> entityClass){
         Table table = new Table(tableName, entityClass);
         class2TableName.put(entityClass, tableName);
         tableName2Class.put(tableName, entityClass);
@@ -81,7 +83,7 @@ public class ModelManger {
             if (value) {
                 logger.warn("表 " + tableName + " 不存在，已成功创建");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         executor.close();
@@ -123,10 +125,10 @@ public class ModelManger {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("扫描结束");
+        logger.info("扫描结束");
     }
 
 

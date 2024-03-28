@@ -1,6 +1,7 @@
 package top.suyiiyii.su.orm.utils;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * 连接构建器
@@ -22,13 +23,13 @@ public class ConnectionBuilder {
         this.password = password;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         // 加载驱动
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return java.sql.DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        return java.sql.DriverManager.getConnection(url, username, password);
     }
 }

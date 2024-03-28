@@ -1,5 +1,7 @@
 package top.suyiiyii.su.orm.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.su.UniversalUtils;
 import top.suyiiyii.su.orm.struct.Table;
 import top.suyiiyii.su.orm.utils.RowSqlGenerater;
@@ -26,6 +28,7 @@ import java.util.Map;
 
 
 public class Session {
+    private static final Log logger = LogFactory.getLog(Session.class);
     /**
      * 线程安全：每个线程应有自己的session对象，不保证线程安全
      */
@@ -33,10 +36,8 @@ public class Session {
     private final Map<Class<?>, List<Object>> insertCache = new HashMap<>();
     // 对象备份
     private final Map<Object, Object> cache = new HashMap<>();
-
     // 归属于的orm对象
     private final ModelManger modelManger;
-
     private final SqlExecutor sqlExecutor;
 
 
@@ -131,7 +132,7 @@ public class Session {
      * @param list 待插入的对象列表
      * @param <T>  待插入的对象的类型
      */
-    public <T> void batchInsert(List<T> list) throws SQLException, NoSuchFieldException, IllegalAccessException {
+    public <T> void batchInsert(List<T> list) throws SQLException {
         if (list.isEmpty()) {
             return;
         }
@@ -149,10 +150,16 @@ public class Session {
                 }
                 // 获取字段名
                 String fieldName = UniversalUtils.downToCaml(table.columns.get(i).name);
-                // 获取字段的值
-                Field field = obj.getClass().getDeclaredField(fieldName);
-                field.setAccessible(true);
-                preparedStatement.setObject(cnt++, field.get(obj));
+                try {
+                    // 获取字段的值
+                    Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    preparedStatement.setObject(cnt++, field.get(obj));
+
+                } catch (IllegalAccessException | NoSuchFieldException e) {
+                    // 理论上不会出现这种情况
+                    throw new RuntimeException("插入失败" + e);
+                }
             }
             preparedStatement.addBatch();
         }
@@ -166,7 +173,7 @@ public class Session {
      * @param obj 待插入的对象
      * @param <T> 待插入的对象的类型
      */
-    public <T> void insert(T obj) {
+    public <T> void insert(T obj) throws SQLException {
 
         Table table = modelManger.getClass2Table().get(obj.getClass());
         String sql = RowSqlGenerater.getInsertSql(table);
@@ -188,8 +195,8 @@ public class Session {
                 preparedStatement.setObject(cnt++, field.get(obj));
             }
             sqlExecutor.execute(preparedStatement);
-        } catch (Exception e) {
-            throw new RuntimeException("插入失败" + e);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -200,7 +207,7 @@ public class Session {
      * @param obj 待更新的对象
      * @param <T> 待更新的对象的类型
      */
-    public <T> void update(T obj) {
+    public <T> void update(T obj) throws SQLException {
         Table table = modelManger.getClass2Table().get(obj.getClass());
         String sql = RowSqlGenerater.getUpdateSql(table);
         PreparedStatement preparedStatement;
@@ -233,8 +240,8 @@ public class Session {
                 }
             }
             sqlExecutor.execute(preparedStatement);
-        } catch (Exception e) {
-            throw new RuntimeException("更新失败" + e);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -250,7 +257,7 @@ public class Session {
     public <T> Warpper query(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("SELECT * FROM " + tableName + " ");
+            String sql = warpper.buildSql("SELECT * FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             ResultSet rs = sqlExecutor.query(ps);
@@ -275,7 +282,7 @@ public class Session {
     public <T> Warpper delete(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("DELETE FROM " + tableName + " ");
+            String sql = warpper.buildSql("DELETE FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             return sqlExecutor.execute(ps);
@@ -294,7 +301,7 @@ public class Session {
     public <T> Warpper update(Class<T> clazz) {
         return new Warpper(clazz, warpper -> {
             String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("UPDATE " + tableName + " ");
+            String sql = warpper.buildSql("UPDATE `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
             ps = warpper.fillParams(ps);
             return sqlExecutor.execute(ps);
@@ -305,13 +312,13 @@ public class Session {
      * 检查已经查询出的对象是否有更改
      * 如果有更改则进行更新
      */
-    private void checkUpdate() {
+    private void checkUpdate() throws SQLException {
         List<Object> toUpdate = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : cache.entrySet()) {
             Object ori = entry.getValue();
             Object cur = entry.getKey();
             if (!UniversalUtils.equal(ori, cur)) {
-                System.out.println("找到一个更改" + cur);
+                logger.info("找到一个更改" + cur);
                 toUpdate.add(cur);
             }
         }
@@ -339,5 +346,4 @@ public class Session {
     public void close() {
         sqlExecutor.close();
     }
-
 }

@@ -20,7 +20,7 @@ import static top.suyiiyii.su.WebUtils.respWrite;
 public class Register extends BaseHttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RegisterRequest registerRequest = readRequestBody2Obj(request, RegisterRequest.class);
-        User user = top.suyiiyii.security.Register.register(this.db, registerRequest.username, registerRequest.password);
+        User user = top.suyiiyii.service.security.Register.register(this.db, registerRequest.username, registerRequest.password);
         respWrite(response, user);
     }
 }

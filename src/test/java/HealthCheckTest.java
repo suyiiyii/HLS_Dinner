@@ -28,6 +28,6 @@ public class HealthCheckTest {
         new HealthCheck().doGet(request, response);
 
         // 验证doGet方法的行为
-        assertEquals("{\"status\":\"heathy\"}", stringWriter.toString());
+        assertEquals("{\"status\":\"healthy\"}", stringWriter.toString());
     }
 }

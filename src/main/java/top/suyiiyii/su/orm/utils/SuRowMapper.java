@@ -41,7 +41,7 @@ public class SuRowMapper<T> {
      * @param resultSet   数据库查询结果集
      * @return 包含实体对象的列表
      */
-    public static <T> List<T> rowMapper(Class<T> entityClazz, ResultSet resultSet) throws SQLException, RuntimeException {
+    public static <T> List<T> rowMapper(Class<T> entityClazz, ResultSet resultSet) throws SQLException {
         // 实例化列表以存储映射后的实体对象
         List<T> entityList = new ArrayList<>();
         while (resultSet.next()) {
@@ -49,7 +49,8 @@ public class SuRowMapper<T> {
             try {
                 T entity = getEntity(resultSet, entityClazz);
                 entityList.add(entity);
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
                 throw new RuntimeException("映射实体类失败");
             }
         }
@@ -62,8 +63,7 @@ public class SuRowMapper<T> {
      *
      * @param resultSet   数据库查询结果集
      * @param entityClass 目标实体类的 Class 对象
-     * @return 实体类的新实例，
-     * @throws Exception 异常
+     * @return 实体类的新实例
      */
     public static <T> T getEntity(ResultSet resultSet, Class<T> entityClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
         // 创建并初始化一个新的实体类实例

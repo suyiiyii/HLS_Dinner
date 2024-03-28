@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.su.orm.struct.ConnectionPool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -60,6 +61,7 @@ public class SuConnectionPool implements ConnectionPool {
                 Connection connection = newConnection.call();
                 availableConnections.add(connection);
             } catch (Exception e) {
+                // 这里由于.call()方法的异常声明，所以必须写Exception
                 logger.error("Init connection pool error: %s".formatted(e));
             }
         }
@@ -91,7 +93,14 @@ public class SuConnectionPool implements ConnectionPool {
             connection = availableConnections.iterator().next();
             availableConnections.remove(connection);
             usedConnections.add(connection);
+            if (!connection.isValid(1)) {
+                logger.warn("获取到的连接已失效，重新获取");
+                usedConnections.remove(connection);
+                connection = this.getConnection();
+            }
             return connection;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         } finally {
             lock.unlock();
         }
@@ -161,7 +170,7 @@ public class SuConnectionPool implements ConnectionPool {
                 availableConnections.remove(connection);
                 try {
                     connection.close();
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     logger.warn("Close connection error: %s".formatted(e));
                 }
             }

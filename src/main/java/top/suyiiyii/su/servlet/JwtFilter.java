@@ -38,7 +38,7 @@ public class JwtFilter implements Filter {
         // 白名单机制，跳过登录注册接口以及健康检查接口
         if (req.getRequestURI().equals("/user/login") ||
                 req.getRequestURI().equals("/user/register") ||
-                req.getRequestURI().equals("/health_check")){
+                req.getRequestURI().equals("/health_check")) {
             logger.info("跳过登录注册接口");
             filterChain.doFilter(servletRequest, servletResponse);
             return;

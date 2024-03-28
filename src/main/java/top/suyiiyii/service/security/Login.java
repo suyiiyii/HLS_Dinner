@@ -1,8 +1,8 @@
-package top.suyiiyii.security;
+package top.suyiiyii.service.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.dao.Users;
+import top.suyiiyii.dao.UsersDAO;
 import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.exception.UserAuthenticationException;
 import top.suyiiyii.models.User;
@@ -24,8 +24,8 @@ public class Login {
     private static final Log logger = LogFactory.getLog(Register.class);
 
     public static TokenData login(Session db, String username, String password) throws UserAuthenticationException {
-        Users users = new UsersImpl(db);
-        User user = users.getUserByUsername(username);
+        UsersDAO usersDAO = new UsersImpl(db);
+        User user = usersDAO.getUserByUsername(username);
 
 
         if (!checkPassword(password, user)) {
@@ -34,7 +34,7 @@ public class Login {
 
         TokenData tokenData = new TokenData();
         tokenData.uid = user.id;
-        tokenData.role = "admin";
+        tokenData.role = user.role;
         return tokenData;
     }
 

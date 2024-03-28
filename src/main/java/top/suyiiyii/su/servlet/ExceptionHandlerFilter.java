@@ -42,6 +42,9 @@ public class ExceptionHandlerFilter implements Filter {
             HttpServletResponse resp = (HttpServletResponse) servletResponse;
             // 暂时不考虑使用不同的状态码，待后续使用Spring等框架再进行优化
             resp.setStatus(500);
+            if ((int) req.getAttribute("statusCode") != 0) {
+                resp.setStatus((int) req.getAttribute("statusCode"));
+            }
             WebUtils.respWrite(resp, e.getMessage());
         }
         logger.info("请求处理完成： " + req.getRequestURI());
