@@ -126,7 +126,7 @@ public class ModelManger {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("扫描结束");
+        logger.info("扫描结束");
     }
 
 

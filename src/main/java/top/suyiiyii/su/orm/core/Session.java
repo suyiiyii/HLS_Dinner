@@ -1,5 +1,7 @@
 package top.suyiiyii.su.orm.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.su.UniversalUtils;
 import top.suyiiyii.su.orm.struct.Table;
 import top.suyiiyii.su.orm.utils.RowSqlGenerater;
@@ -26,6 +28,7 @@ import java.util.Map;
 
 
 public class Session {
+    private static final Log logger = LogFactory.getLog(Session.class);
     /**
      * 线程安全：每个线程应有自己的session对象，不保证线程安全
      */
@@ -33,10 +36,8 @@ public class Session {
     private final Map<Class<?>, List<Object>> insertCache = new HashMap<>();
     // 对象备份
     private final Map<Object, Object> cache = new HashMap<>();
-
     // 归属于的orm对象
     private final ModelManger modelManger;
-
     private final SqlExecutor sqlExecutor;
 
 
@@ -311,7 +312,7 @@ public class Session {
             Object ori = entry.getValue();
             Object cur = entry.getKey();
             if (!UniversalUtils.equal(ori, cur)) {
-                System.out.println("找到一个更改" + cur);
+                logger.info("找到一个更改" + cur);
                 toUpdate.add(cur);
             }
         }

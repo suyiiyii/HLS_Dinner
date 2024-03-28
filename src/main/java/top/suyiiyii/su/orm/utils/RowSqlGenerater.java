@@ -1,5 +1,7 @@
 package top.suyiiyii.su.orm.utils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.su.orm.struct.Column;
 import top.suyiiyii.su.orm.struct.Table;
 
@@ -12,6 +14,7 @@ public class RowSqlGenerater {
     /**
      * 线程安全：全静态方法，无静态对象，不涉及线程安全问题
      */
+    private static final Log logger = LogFactory.getLog(RowSqlGenerater.class);
 
     public static String selectByKey(String tableName, String key) {
         return "SELECT * FROM " + tableName + " WHERE " + key + " = ?";
@@ -40,7 +43,7 @@ public class RowSqlGenerater {
         sql2.deleteCharAt(sql2.length() - 1);
         sql2.append(")");
         sql.append(" ").append(sql2);
-        System.out.println(sql);
+        logger.debug("生成的sql: " + sql);
         return sql.toString();
     }
 
@@ -64,7 +67,7 @@ public class RowSqlGenerater {
                 break;
             }
         }
-        System.out.println(sql);
+        logger.debug("生成的sql: " + sql);
         return sql.toString();
     }
 
