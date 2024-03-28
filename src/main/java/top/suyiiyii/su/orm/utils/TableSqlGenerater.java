@@ -15,7 +15,7 @@ public class TableSqlGenerater {
      */
 
     public static String getCreateTableSql(Table table) {
-        StringBuilder sql = new StringBuilder("CREATE TABLE " + table.tableName + " (");
+        StringBuilder sql = new StringBuilder("CREATE TABLE `" + table.tableName + "` (");
         for (Column column : table.columns) {
             sql.append("\n");
             // 字段名
@@ -49,7 +49,7 @@ public class TableSqlGenerater {
     }
 
     public static String getDropTableSql(Table table) {
-        return "DROP TABLE " + table.tableName + ";";
+        return "DROP TABLE `" + table.tableName + "`;";
     }
 
     public static String getIsTableExistSql(Table table) {

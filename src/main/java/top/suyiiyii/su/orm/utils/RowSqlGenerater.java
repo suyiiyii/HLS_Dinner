@@ -17,18 +17,18 @@ public class RowSqlGenerater {
     private static final Log logger = LogFactory.getLog(RowSqlGenerater.class);
 
     public static String selectByKey(String tableName, String key) {
-        return "SELECT * FROM " + tableName + " WHERE " + key + " = ?";
+        return "SELECT * FROM `" + tableName + "` WHERE " + key + " = ?";
     }
 
     public static String selectAll(String tableName) {
-        return "SELECT * FROM " + tableName;
+        return "SELECT * FROM `" + tableName + "`";
     }
 
 
     public static String getInsertSql(Table table) {
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         StringBuilder sql2 = new StringBuilder("VALUES (");
-        sql.append(table.tableName).append("(");
+        sql.append(" `").append(table.tableName).append("` ").append("(");
         for (int i = 0; i < table.columns.size(); i++) {
             Column column = table.columns.get(i);
             // 跳过自增字段
@@ -49,7 +49,7 @@ public class RowSqlGenerater {
 
     public static String getUpdateSql(Table table) {
         StringBuilder sql = new StringBuilder("UPDATE ");
-        sql.append(table.tableName).append(" SET ");
+        sql.append(" `").append(table.tableName).append("` ").append(" SET ");
         for (int i = 0; i < table.columns.size(); i++) {
             Column column = table.columns.get(i);
             // 跳过主键字段
