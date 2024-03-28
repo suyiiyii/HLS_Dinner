@@ -44,6 +44,10 @@ public class TableServlet extends BaseHttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!role.equals("admin")) {
+            req.setAttribute("statusCode", 403);
+            throw new RuntimeException("Permission denied");
+        }
         Table table = WebUtils.readRequestBody2Obj(req, Table.class);
         // 检查参数
         if (table.name == null || table.description == null) {

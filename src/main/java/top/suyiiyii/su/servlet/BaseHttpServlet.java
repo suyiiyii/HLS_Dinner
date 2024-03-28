@@ -23,6 +23,7 @@ public class BaseHttpServlet extends HttpServlet {
     protected ConfigManger configManger;
     protected int uid = -1;
     protected String role = "guest";
+    protected int statusCode = 0;
 
     /**
      * 依赖注入
@@ -52,6 +53,7 @@ public class BaseHttpServlet extends HttpServlet {
             }
         } finally {
             db.close();
+            req.setAttribute("statusCode", statusCode);
         }
     }
 
