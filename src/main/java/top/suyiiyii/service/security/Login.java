@@ -1,4 +1,4 @@
-package top.suyiiyii.security;
+package top.suyiiyii.service.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

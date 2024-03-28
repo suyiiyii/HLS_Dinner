@@ -1,4 +1,4 @@
-package top.suyiiyii.security;
+package top.suyiiyii.service.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +43,7 @@ public class Register {
 
         User user = new User();
         user.username = username;
-        user.password = top.suyiiyii.security.Login.hashPassword(password);
+        user.password = Login.hashPassword(password);
         user.role = "user";
 
         user = usersDAO.createUser(user);
