@@ -1,5 +1,6 @@
 package top.suyiiyii.router;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @WebServlet("/table")
 public class TableServlet extends BaseHttpServlet {
+    TableService tableService;
+
     /**
      * 获取所有桌子的信息
      *
@@ -27,7 +30,7 @@ public class TableServlet extends BaseHttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TableService tableService = new TableService(db);
+
         List<Table> tables = tableService.getTables();
         WebUtils.respWrite(resp, tables);
     }
@@ -41,7 +44,6 @@ public class TableServlet extends BaseHttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TableService tableService = new TableService(db);
         Table table = WebUtils.readRequestBody2Obj(req, Table.class);
         // 检查参数
         if (table.name == null || table.description == null) {
@@ -62,7 +64,6 @@ public class TableServlet extends BaseHttpServlet {
      */
     @Override
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TableService tableService = new TableService(db);
         Table table = WebUtils.readRequestBody2Obj(req, Table.class);
 
         if (role.equals("admin")) {
@@ -76,4 +77,11 @@ public class TableServlet extends BaseHttpServlet {
             throw new RuntimeException("Permission denied");
         }
     }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        tableService = new TableService(db);
+        super.service(req, resp);
+    }
 }
+
