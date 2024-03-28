@@ -13,12 +13,11 @@ import java.util.NoSuchElementException;
  *
  * @author suyiiyii
  */
-public class UsersImpl implements UsersDAO {
-    private final Session db;
+public class UsersImpl extends BaseImpl implements UsersDAO {
     Log logger = LogFactory.getLog(UsersImpl.class);
 
     public UsersImpl(Session db) {
-        this.db = db;
+        super(db);
     }
 
     /**

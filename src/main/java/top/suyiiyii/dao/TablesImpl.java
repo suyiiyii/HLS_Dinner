@@ -13,12 +13,11 @@ import java.util.List;
  *
  * @author suyiiyii
  */
-public class TablesImpl implements TablesDAO {
+public class TablesImpl extends BaseImpl implements TablesDAO {
 
-    private final Session db;
 
     public TablesImpl(Session db) {
-        this.db = db;
+        super(db);
     }
 
     @Override

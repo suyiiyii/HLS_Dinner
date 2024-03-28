@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author suyiiyii
  */
-public interface TablesDAO {
+public interface TablesDAO extends BaseDAO{
     /**
      * 获取所有桌子
      *
