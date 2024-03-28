@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Sql的查询条件的构建器
@@ -153,7 +154,7 @@ public class Warpper {
 
 
         if (pageNum != -1 && pageSize != -1) {
-            sql.append(" LIMIT " + (pageNum - 1) * pageSize + "," + pageSize);
+            sql.append(" LIMIT ").append((pageNum - 1) * pageSize).append(",").append(pageSize);
         }
 
         return sql.toString();
@@ -206,10 +207,14 @@ public class Warpper {
      * @return 结果
      * @throws SQLException SQL异常
      */
-    public <T> T first() throws SQLException {
+    public <T> T first() throws SQLException, NoSuchElementException {
         pageNum = 1;
         pageSize = 1;
-        return (T) all().get(0);
+        List<T> list = all();
+        if (list.isEmpty()) {
+            throw new NoSuchElementException("查询结果为空");
+        }
+        return (T) list.get(0);
     }
 
 }

@@ -2,7 +2,7 @@ package top.suyiiyii.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import top.suyiiyii.dao.Users;
+import top.suyiiyii.dao.UsersDAO;
 import top.suyiiyii.dao.UsersImpl;
 import top.suyiiyii.models.User;
 import top.suyiiyii.su.orm.core.Session;
@@ -20,7 +20,7 @@ public class Register {
     public static User register(Session db, String username, String password) {
         logger.info("用户注册：" + username);
         // 参数校验
-        Users users = new UsersImpl(db);
+        UsersDAO usersDAO = new UsersImpl(db);
         if (username == null || password == null) {
             logger.error("用户注册失败，参数错误");
             logger.error("username: " + username);
@@ -30,7 +30,7 @@ public class Register {
         User checkUser = null;
 
         try {
-            checkUser = users.getUserByUsername(username);
+            checkUser = usersDAO.getUserByUsername(username);
         } catch (NoSuchElementException ignored) {
         }
 
@@ -46,8 +46,8 @@ public class Register {
         user.password = top.suyiiyii.security.Login.hashPassword(password);
         user.role = "user";
 
-        user = users.createUser(user);
-        user = users.getUserByUsername(username);
+        user = usersDAO.createUser(user);
+        user = usersDAO.getUserByUsername(username);
         logger.info("用户注册成功：" + username);
         return user;
     }

@@ -61,6 +61,7 @@ public class SuConnectionPool implements ConnectionPool {
                 Connection connection = newConnection.call();
                 availableConnections.add(connection);
             } catch (Exception e) {
+                // 这里由于.call()方法的异常声明，所以必须写Exception
                 logger.error("Init connection pool error: %s".formatted(e));
             }
         }
@@ -169,7 +170,7 @@ public class SuConnectionPool implements ConnectionPool {
                 availableConnections.remove(connection);
                 try {
                     connection.close();
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     logger.warn("Close connection error: %s".formatted(e));
                 }
             }

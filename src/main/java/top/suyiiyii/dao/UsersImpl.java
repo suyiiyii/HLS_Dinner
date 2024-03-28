@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
  *
  * @author suyiiyii
  */
-public class UsersImpl implements Users {
+public class UsersImpl implements UsersDAO {
     private final Session db;
     Log logger = LogFactory.getLog(UsersImpl.class);
 

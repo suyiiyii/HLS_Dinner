@@ -15,7 +15,7 @@
 1. 定义模型类
 
     ```java
-    @TableRegister("users")
+    @TableRegister("usersDAO")
     public class Users {
         @ColumnSetting(isPrimaryKey = true, isAutoIncrement = true)
         public int id;
@@ -75,3 +75,7 @@
 * 由于实现原因，需要实现一个作为主键并且自增的id字段
 * 一个Session对应的是一个Connection
 * 如果有修改，需要用`commit`方法提交
+
+# 异常处理
+
+调用.first()方法时，如果查询结果为空，会抛出`NoResultException`异常

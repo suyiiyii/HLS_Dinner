@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  *
  * @author suyiiyii
  */
-public interface Users {
+public interface UsersDAO {
     User getUserById(int id);
 
     User getUserByUsername(String username) throws NoSuchElementException;

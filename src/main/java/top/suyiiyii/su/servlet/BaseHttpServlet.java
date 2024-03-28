@@ -22,6 +22,7 @@ public class BaseHttpServlet extends HttpServlet {
     protected Session db;
     protected ConfigManger configManger;
     protected int uid = -1;
+    protected String role = "guest";
 
     /**
      * 依赖注入
@@ -41,11 +42,20 @@ public class BaseHttpServlet extends HttpServlet {
         TokenData tokenData = (TokenData) req.getAttribute("tokenData");
         if (tokenData != null) {
             this.uid = tokenData.uid;
+            this.role = tokenData.role;
         }
         try {
-            super.service(req, resp);
+            if ("PATCH".equals(req.getMethod())) {
+                doPatch(req, resp);
+            } else {
+                super.service(req, resp);
+            }
         } finally {
             db.close();
         }
     }
+
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    }
 }
+

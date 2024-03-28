@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.su.exception.ConfigNotFoundException;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,7 +34,7 @@ public class ConfigManger {
                 config.put(key, properties.getProperty(key));
             }
             logger.info("读取配置文件成功，一共 " + config.size() + " 条配置");
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.info("读取配置文件失败，将会从环境变量读取配置 " + e);
         }
     }

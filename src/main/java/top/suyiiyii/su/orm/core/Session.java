@@ -132,7 +132,7 @@ public class Session {
      * @param list 待插入的对象列表
      * @param <T>  待插入的对象的类型
      */
-    public <T> void batchInsert(List<T> list) throws SQLException, NoSuchFieldException, IllegalAccessException {
+    public <T> void batchInsert(List<T> list) throws SQLException {
         if (list.isEmpty()) {
             return;
         }
@@ -150,10 +150,16 @@ public class Session {
                 }
                 // 获取字段名
                 String fieldName = UniversalUtils.downToCaml(table.columns.get(i).name);
-                // 获取字段的值
-                Field field = obj.getClass().getDeclaredField(fieldName);
-                field.setAccessible(true);
-                preparedStatement.setObject(cnt++, field.get(obj));
+                try {
+                    // 获取字段的值
+                    Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    preparedStatement.setObject(cnt++, field.get(obj));
+
+                } catch (IllegalAccessException | NoSuchFieldException e) {
+                    // 理论上不会出现这种情况
+                    throw new RuntimeException("插入失败" + e);
+                }
             }
             preparedStatement.addBatch();
         }
@@ -167,7 +173,7 @@ public class Session {
      * @param obj 待插入的对象
      * @param <T> 待插入的对象的类型
      */
-    public <T> void insert(T obj) {
+    public <T> void insert(T obj) throws SQLException {
 
         Table table = modelManger.getClass2Table().get(obj.getClass());
         String sql = RowSqlGenerater.getInsertSql(table);
@@ -189,8 +195,8 @@ public class Session {
                 preparedStatement.setObject(cnt++, field.get(obj));
             }
             sqlExecutor.execute(preparedStatement);
-        } catch (Exception e) {
-            throw new RuntimeException("插入失败" + e);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -201,7 +207,7 @@ public class Session {
      * @param obj 待更新的对象
      * @param <T> 待更新的对象的类型
      */
-    public <T> void update(T obj) {
+    public <T> void update(T obj) throws SQLException {
         Table table = modelManger.getClass2Table().get(obj.getClass());
         String sql = RowSqlGenerater.getUpdateSql(table);
         PreparedStatement preparedStatement;
@@ -234,8 +240,8 @@ public class Session {
                 }
             }
             sqlExecutor.execute(preparedStatement);
-        } catch (Exception e) {
-            throw new RuntimeException("更新失败" + e);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -306,7 +312,7 @@ public class Session {
      * 检查已经查询出的对象是否有更改
      * 如果有更改则进行更新
      */
-    private void checkUpdate() {
+    private void checkUpdate() throws SQLException {
         List<Object> toUpdate = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : cache.entrySet()) {
             Object ori = entry.getValue();
@@ -340,5 +346,4 @@ public class Session {
     public void close() {
         sqlExecutor.close();
     }
-
 }
