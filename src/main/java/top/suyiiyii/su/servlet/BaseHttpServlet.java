@@ -37,13 +37,37 @@ public class BaseHttpServlet extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletConfig config = getServletConfig();
-        this.db = ((ModelManger) config.getServletContext().getAttribute("ModelManger")).getSession();
-        this.configManger = (ConfigManger) config.getServletContext().getAttribute("ConfigManger");
-        TokenData tokenData = (TokenData) req.getAttribute("tokenData");
-        if (tokenData != null) {
-            this.uid = tokenData.uid;
-            this.role = tokenData.role;
+        inject(req);
+        try {
+            if ("PATCH".equals(req.getMethod())) {
+                doPatch(req, resp);
+            } else {
+                super.service(req, resp);
+            }
+        } finally {
+            db.close();
+            req.setAttribute("statusCode", statusCode);
+        }
+    }
+
+    /**
+     * 依赖注入
+     * 功能同上
+     * 为了解决依赖注入的顺序问题，提供回调函数接口，在上层依赖注入后再注入下层依赖
+     *
+     * @param req      the {@link HttpServletRequest} object that contains the request the client made of the servlet
+     * @param resp     the {@link HttpServletResponse} object that contains the response the servlet returns to the client
+     * @param callable the {@link Runnable} object that contains the code to be executed
+     * @throws ServletException if an exception occurs that interferes with the servlet's normal operation
+     * @throws IOException      if an input or output exception occurs
+     */
+    protected void service(HttpServletRequest req, HttpServletResponse resp, Runnable callable) throws IOException, ServletException {
+
+        inject(req);
+        try {
+            callable.run();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         try {
             if ("PATCH".equals(req.getMethod())) {
@@ -54,6 +78,17 @@ public class BaseHttpServlet extends HttpServlet {
         } finally {
             db.close();
             req.setAttribute("statusCode", statusCode);
+        }
+    }
+
+    private void inject(HttpServletRequest req) {
+        ServletConfig config = getServletConfig();
+        this.db = ((ModelManger) config.getServletContext().getAttribute("ModelManger")).getSession();
+        this.configManger = (ConfigManger) config.getServletContext().getAttribute("ConfigManger");
+        TokenData tokenData = (TokenData) req.getAttribute("tokenData");
+        if (tokenData != null) {
+            this.uid = tokenData.uid;
+            this.role = tokenData.role;
         }
     }
 

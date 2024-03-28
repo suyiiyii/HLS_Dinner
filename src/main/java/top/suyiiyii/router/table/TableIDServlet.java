@@ -90,7 +90,17 @@ public class TableIDServlet extends BaseHttpServlet {
             WebUtils.respWrite(resp, table);
 
         } else if (role.equals("user")) {
-
+            // 更新表;
+            String status = table.status;
+            if (status.equals("空闲")) {
+                tableService.releaseTable(id);
+            } else if (status.equals("已占用")) {
+                tableService.registerTable(id, uid);
+            } else {
+                throw new RuntimeException("Table status error");
+            }
+            table = tableService.getTableById(id);
+            WebUtils.respWrite(resp, table);
         } else {
             throw new RuntimeException("Permission denied");
         }
@@ -98,12 +108,13 @@ public class TableIDServlet extends BaseHttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        tableService = new TableService(db);
-        String path = req.getPathInfo();
-        String[] paths = path.split("/");
-        if (paths.length > 1) {
-            id = Integer.parseInt(paths[1]);
-        }
-        super.service(req, resp);
+        super.service(req, resp, () -> {
+            tableService = new TableService(db);
+            String path = req.getPathInfo();
+            String[] paths = path.split("/");
+            if (paths.length > 1) {
+                id = Integer.parseInt(paths[1]);
+            }
+        });
     }
 }
