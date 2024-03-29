@@ -152,6 +152,9 @@ public class TableService {
         if (table.uid == -1) {
             table.uid = oldTable.uid;
         }
+        if (table.imgUrl == null) {
+            table.imgUrl = oldTable.imgUrl;
+        }
         tablesDAO.updateTable(table);
     }
 
