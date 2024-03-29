@@ -24,7 +24,7 @@ public class TableIDServlet extends BaseHttpServlet {
      *
      * @param req  an {@link HttpServletRequest} object that contains the request the client has made of the servlet
      * @param resp an {@link HttpServletResponse} object that contains the response the servlet sends to the client
-     * @throws IOException
+     * @throws IOException if an input or output error is detected when the servlet handles the GET request
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -39,7 +39,7 @@ public class TableIDServlet extends BaseHttpServlet {
      *
      * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
-     * @throws IOException
+     * @throws IOException if an input or output error is detected when the servlet handles the PUT request
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -59,7 +59,7 @@ public class TableIDServlet extends BaseHttpServlet {
      *
      * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
-     * @throws IOException
+     * @throws IOException if an input or output error is detected when the servlet handles the DELETE request
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -74,16 +74,25 @@ public class TableIDServlet extends BaseHttpServlet {
 
     /**
      * 更新一张桌子
-     * 直接操作数据库，只有管理员可以操作
+     * 管理员请求将会直接操作数据库
+     * 用户请求将会根据表的状态进行操作
+     * 如果id=-1，说明是在处理/table/my的请求
      *
      * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
-     * @throws IOException
+     * @throws IOException if an input or output error is detected when the servlet handles the PATCH request
      */
     @Override
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Table table = WebUtils.readRequestBody2Obj(req, Table.class);
         table.id = id;
+
+        // 如果id=-1，说明是在处理/table/my的请求
+        if (id == -1) {
+            this.myTable(req, resp);
+            return;
+        }
+
         if (role.equals("admin")) {
             // 更新表
             tableService.updateTable(table);
@@ -106,6 +115,11 @@ public class TableIDServlet extends BaseHttpServlet {
         }
     }
 
+    protected void myTable(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Table table = tableService.getTableByUid(uid);
+        WebUtils.respWrite(resp, table);
+    }
+
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         super.service(req, resp, () -> {
@@ -113,6 +127,15 @@ public class TableIDServlet extends BaseHttpServlet {
             String path = req.getPathInfo();
             String[] paths = path.split("/");
             if (paths.length > 1) {
+                // 这样在这里添加处理/table/my的逻辑是不行的，因为这里的函数只是在调用具体的方法前执行的一小段代码，最终还是会调用doGet/doPut/doDelete/doPatch
+//                if (paths[1].equals("my")) {
+//                    try {
+//                        this.myTable(req, resp);
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    return;
+//                }
                 id = Integer.parseInt(paths[1]);
             }
         });
