@@ -50,6 +50,17 @@ public class TableService {
     }
 
     /**
+     * 通过uid获取一张桌子的信息
+     */
+    public Table getTableByUid(int uid) {
+        try {
+            return this.tablesDAO.getTableByUid(uid);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Table not found");
+        }
+    }
+
+    /**
      * 注册一张桌子
      * 用户使用的接口
      */
@@ -63,11 +74,11 @@ public class TableService {
                 throw new RuntimeException("Table already in use");
             }
             // 检查用户是否已注册过
-            boolean isExist = false;
+            boolean isExist = true;
             try {
                 tablesDAO.getTableByUid(uid);
             } catch (RuntimeException e) {
-                isExist = true;
+                isExist = false;
             }
             if (isExist) {
                 throw new RuntimeException("User already registered");
@@ -89,9 +100,14 @@ public class TableService {
     /**
      * 释放一张桌子
      */
-    public void releaseTable(int id) {
+    public void releaseTable(int id, int uid) {
         tablesDAO.beginTransaction();
         Table table = getTableById(id);
+        // 判断是否是该用户注册的桌子
+        if (table.uid != uid) {
+            throw new RuntimeException("Table not registered by this user");
+        }
+
         table.status = "空闲";
         table.registerTime = -1;
         table.uid = -1;
@@ -147,6 +163,10 @@ public class TableService {
         if (table.uid == -1) {
             table.uid = oldTable.uid;
         }
+        if (table.imgUrl == null) {
+            table.imgUrl = oldTable.imgUrl;
+        }
+        // TODO: 添加使用反射，用一个对象的非空属性更新另一个对象
         tablesDAO.updateTable(table);
     }
 

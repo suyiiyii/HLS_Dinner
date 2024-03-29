@@ -1,3 +1,3 @@
 # Suyiiyii的工具库
 
-## `Version 1.0.3`
+## `Version 1.0.4`

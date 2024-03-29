@@ -1,4 +1,4 @@
-FROM tomcat:10-jdk17
+FROM tomcat:10.1.20-jre17-temurin-jammy
 
 # 删除webapps目录下的所有文件
 RUN rm -rf /usr/local/tomcat/webapps/*

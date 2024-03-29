@@ -77,7 +77,7 @@ public class WebUtils {
         // 允许任何域名发起请求，也可以指定具体的域名
         resp.setHeader("Access-Control-Allow-Origin", "*");
         // 允许的HTTP方法
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE, PATCH");
         // 预检请求缓存时间（单位：秒）
         resp.setHeader("Access-Control-Max-Age", "3600");
         // 允许自定义请求头

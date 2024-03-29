@@ -47,6 +47,8 @@ resources:
               - PUT
               - DELETE
               - OPTIONS
+              - HEAD
+              - PATCH
             authType: anonymous
             disableURLInternet: false
           triggerName: defaultTrigger
