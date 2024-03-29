@@ -137,7 +137,7 @@ public class UniversalUtils {
     }
 
     /**
-     * 使用反射，用一个对象的非空属性更新另一个对象
+     * 使用反射，用新对象的非空属性更新旧对象的对应属性
      */
     public static void updateObj(Object oldObj, Object newObj) {
         try {

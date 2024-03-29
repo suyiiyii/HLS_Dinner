@@ -150,7 +150,7 @@ public class TableService {
         // 更新表
         Table oldTable = getTableById(table.id);
         UniversalUtils.updateObj(oldTable, table);
-        tablesDAO.updateTable(table);
+        tablesDAO.updateTable(oldTable);
     }
 
     /**
