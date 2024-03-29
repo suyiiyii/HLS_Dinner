@@ -43,7 +43,7 @@ public class Login extends BaseHttpServlet {
 
         tokenData = top.suyiiyii.service.security.Login.login(db, request.username, request.password);
         String secret = configManger.get("secret");
-        token.access_token = JwtUtils.createToken(tokenData, secret, 60 * 10);
+        token.access_token = JwtUtils.createToken(tokenData, secret, 60 * 60 * 24);
 
         logger.info("签发token：" + token.access_token);
 
