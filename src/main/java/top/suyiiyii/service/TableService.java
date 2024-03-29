@@ -50,6 +50,17 @@ public class TableService {
     }
 
     /**
+     * 通过uid获取一张桌子的信息
+     */
+    public Table getTableByUid(int uid) {
+        try {
+            return this.tablesDAO.getTableByUid(uid);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Table not found");
+        }
+    }
+
+    /**
      * 注册一张桌子
      * 用户使用的接口
      */
@@ -155,6 +166,7 @@ public class TableService {
         if (table.imgUrl == null) {
             table.imgUrl = oldTable.imgUrl;
         }
+        // TODO: 添加使用反射，用一个对象的非空属性更新另一个对象
         tablesDAO.updateTable(table);
     }
 
