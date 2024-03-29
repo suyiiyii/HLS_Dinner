@@ -63,11 +63,11 @@ public class TableService {
                 throw new RuntimeException("Table already in use");
             }
             // 检查用户是否已注册过
-            boolean isExist = false;
+            boolean isExist = true;
             try {
                 tablesDAO.getTableByUid(uid);
             } catch (RuntimeException e) {
-                isExist = true;
+                isExist = false;
             }
             if (isExist) {
                 throw new RuntimeException("User already registered");
