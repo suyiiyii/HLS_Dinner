@@ -61,8 +61,9 @@ public class TableServlet extends BaseHttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        super.service(req, resp);
-        tableService = new TableService(db);
+        super.service(req, resp, () -> {
+            tableService = new TableService(db);
+        });
     }
 }
 
