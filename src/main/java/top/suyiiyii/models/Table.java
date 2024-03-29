@@ -20,4 +20,6 @@ public class Table {
     public String status;
     public int registerTime;
     public int uid;
+    @ColumnSetting(stringLength = 255)
+    public String imgUrl;
 }
