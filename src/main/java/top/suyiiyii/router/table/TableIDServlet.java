@@ -93,7 +93,7 @@ public class TableIDServlet extends BaseHttpServlet {
             // 更新表;
             String status = table.status;
             if (status.equals("空闲")) {
-                tableService.releaseTable(id);
+                tableService.releaseTable(id, uid);
             } else if (status.equals("已占用")) {
                 tableService.registerTable(id, uid);
             } else {

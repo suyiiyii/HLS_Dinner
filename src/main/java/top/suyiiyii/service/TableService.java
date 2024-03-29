@@ -89,9 +89,14 @@ public class TableService {
     /**
      * 释放一张桌子
      */
-    public void releaseTable(int id) {
+    public void releaseTable(int id, int uid) {
         tablesDAO.beginTransaction();
         Table table = getTableById(id);
+        // 判断是否是该用户注册的桌子
+        if (table.uid != uid) {
+            throw new RuntimeException("Table not registered by this user");
+        }
+
         table.status = "空闲";
         table.registerTime = -1;
         table.uid = -1;
