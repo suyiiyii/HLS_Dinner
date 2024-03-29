@@ -45,6 +45,7 @@ public class JwtFilter implements Filter {
         }
         String authHeader = req.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            servletRequest.setAttribute("statusCode", 401);
             throw new ServletException("缺少Authorization头或者Authorization头不以Bearer开头");
         }
         String token = authHeader.substring(7);
