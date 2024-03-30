@@ -145,10 +145,14 @@ public class OrderService {
         }
     }
 
-    public List<OrderResp> getAllOrder() {
+    public List<OrderResp> getAllOrder(int uid) {
         List<Order> orders;
         try {
-            orders = db.query(Order.class).all();
+            if (uid != 0) {
+                orders = db.query(Order.class).eq("uid", uid).all();
+            } else {
+                orders = db.query(Order.class).all();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

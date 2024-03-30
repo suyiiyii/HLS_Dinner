@@ -18,7 +18,11 @@ public class OrderServlet extends BaseHttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        WebUtils.respWrite(resp, orderService.getAllOrder());
+        if (role.equals("admin")) {
+            WebUtils.respWrite(resp, orderService.getAllOrder(0));
+        }else{
+            WebUtils.respWrite(resp, orderService.getAllOrder(uid));
+        }
     }
 
     @Override
