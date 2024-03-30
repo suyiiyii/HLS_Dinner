@@ -133,6 +133,12 @@ public class OrderService {
                 orderItem.price = dish.price;
                 totalPrice += dish.price * entry.getValue();
                 db.insert(orderItem);
+                // 减库存
+                dish.stock -= entry.getValue();
+                db.update(dish);
+                if (dish.stock < 0) {
+                    throw new RuntimeException("库存不足");
+                }
             }
             order.totalPrice = totalPrice;
             db.commitTransaction();
