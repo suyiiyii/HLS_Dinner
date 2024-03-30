@@ -13,8 +13,8 @@ import top.suyiiyii.su.orm.annotation.TableRegister;
 public class OrderItem {
     @ColumnSetting(isPrimaryKey = true, isAutoIncrement = true)
     public int id;
-    public int order_id;
-    public int dish_id;
+    public int orderId;
+    public int dishId;
     public int quantity;
     public int price;
 }

@@ -14,9 +14,9 @@ public class Order {
     @ColumnSetting(isPrimaryKey = true, isAutoIncrement = true)
     public int orderId;
     public int uid;
-    public int table_id;
+    public int tableId;
     @ColumnSetting(stringLength = 100)
     public String status;
-    public int total_price;
-    public int created_at;
+    public int totalPrice;
+    public int createdAt;
 }
