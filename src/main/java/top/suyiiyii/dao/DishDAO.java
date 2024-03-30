@@ -17,6 +17,7 @@ public interface DishDAO extends BaseDAO{
     public void updateDish(Dish dish);
 
     public Dish getDish(int id);
+    public Dish getDish(String name);
 
     public List<Dish> getAllDishes();
 //    public List<Dish> getDishesByType(String type);

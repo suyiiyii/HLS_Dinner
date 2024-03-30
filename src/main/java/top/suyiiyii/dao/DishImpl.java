@@ -48,6 +48,15 @@ public class DishImpl extends BaseImpl implements DishDAO {
     }
 
     @Override
+    public Dish getDish(String name) {
+        try {
+            return db.query(Dish.class).eq("name", name).first();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Dish> getAllDishes() {
         try {
             return db.query(Dish.class).all();

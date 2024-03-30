@@ -47,6 +47,7 @@ public class DishIDSerlvet extends BaseHttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         dishDAO.deleteDish(id);
+        WebUtils.respWrite(resp, "删除成功");
     }
 
     @Override

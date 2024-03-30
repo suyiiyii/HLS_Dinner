@@ -25,7 +25,12 @@ public class DishServlet extends BaseHttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dish dish = WebUtils.readRequestBody2Obj(req, top.suyiiyii.models.Dish.class);
         dishDAO.addDish(dish);
+        dish = dishDAO.getDish(dish.name);
         WebUtils.respWrite(resp, dish);
+        /*
+        dish 的 name属性是唯一的，所以可以通过name属性来获取dish
+        可以只传入name属性来新增数据
+         */
     }
 
     @Override
