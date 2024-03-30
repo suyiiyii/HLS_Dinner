@@ -16,11 +16,11 @@ import java.util.Map;
 public class OrderServlet extends BaseHttpServlet {
     OrderService orderService;
 
-    //    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        WebUtils.respWrite(resp, dishDAO.getAllDishes());
-//    }
-//
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        WebUtils.respWrite(resp, orderService.getAllOrder());
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IOException {
         Map<String, Integer> dishes = WebUtils.readRequestBody2Obj(req, Map.class);

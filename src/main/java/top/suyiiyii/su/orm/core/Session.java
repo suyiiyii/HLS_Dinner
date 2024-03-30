@@ -114,7 +114,9 @@ public class Session {
             checkUpdate();
         }
         // 提交事务
-        sqlExecutor.commit();
+        if (!sqlExecutor.isAutoCommit()) {
+            sqlExecutor.commit();
+        }
     }
 
 

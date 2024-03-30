@@ -145,6 +145,14 @@ public class SqlExecutor {
         connectionManger.returnConnection(conn);
     }
 
+    public boolean isAutoCommit() {
+        try {
+            return conn.getAutoCommit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * 设置自动提交
      *
