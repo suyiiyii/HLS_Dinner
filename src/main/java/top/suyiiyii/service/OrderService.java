@@ -135,7 +135,6 @@ public class OrderService {
                 db.insert(orderItem);
                 // 减库存
                 dish.stock -= entry.getValue();
-                db.update(dish);
                 if (dish.stock < 0) {
                     throw new RuntimeException("库存不足");
                 }

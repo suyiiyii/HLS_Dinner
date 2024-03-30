@@ -365,6 +365,7 @@ public class Session {
      */
     public void commitTransaction() {
         try {
+            this.commit();
             sqlExecutor.commit();
             sqlExecutor.setAutoCommit(true);
         } catch (SQLException e) {
