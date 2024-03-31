@@ -54,7 +54,7 @@ public class BaseHttpServlet extends HttpServlet {
      * 依赖注入
      * 功能同上
      * 为了解决依赖注入的顺序问题，提供回调函数接口，在上层依赖注入后再注入下层依赖
-     *
+     * //PROBLEM 这里遇到了依赖注入的顺序问题，如果在service方法中注入，会导致在doPatch方法中无法使用db，所以提供了回调函数接口，有更好的解决方法吗？
      * @param req      the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp     the {@link HttpServletResponse} object that contains the response the servlet returns to the client
      * @param callable the {@link Runnable} object that contains the code to be executed

@@ -1,6 +1,6 @@
 # SuOrm 框架
 
-## `version 1.0.5`
+## `version 1.0.6`
 
 # features
 
@@ -72,10 +72,55 @@
 
 * 建议一个项目只创建一个`ModelManger`实例
 * 默认不启用事务
-* 由于实现原因，需要实现一个作为主键并且自增的id字段
-* 一个Session对应的是一个Connection
+* 由于实现原因，需要实现一个作为主键并且自增的`id`字段
+* 一个`Session`对应的是一个`Connection`
 * 如果有修改，需要用`commit`方法提交
 
 # 异常处理
 
-调用.first()方法时，如果查询结果为空，会抛出`NoResultException`异常
+调用`.first()`方法时，如果查询结果为空，会抛出`NoResultException`异常
+
+# 主要类关系图
+```mermaid
+classDiagram
+%%    ConnectionManger *-- ModelManger
+    class ModelManger {
+        <<singleton>>
+        +ModelManger(String, ConnectionBuilder)
+        +getSession(): Session
+        +ConnectionManger connectionManger
+        +List<> tables
+    }
+
+    class ConnectionManger {
+        <<singleton>>
+        +ConnectionManger(ConnectionBuilder)
+        +getSqlExecutor(): SqlExecutor
+        -ConnectionPool pool
+    }
+
+    class SuConnectionPool {
+        -List<> pool
+        +getConnection(): Connection
+        +releaseConnection(Connection)
+    }
+
+    class Session {
+        +Session(modelManger)
+        +query(): Wrapper
+        +update(): Wrapper
+        +delete(): Wrapper
+        +commit()
+        -SqlExecutor sqlExecutor
+    }
+
+    ModelManger --* ConnectionManger
+    ModelManger --|> Session: getSession()
+    Session --* SqlExecutor
+    SqlExecutor --* Connection
+    Session --> ConnectionManger: getSqlExecutor()
+    ConnectionManger --> Session: sqlExecutor
+    ConnectionManger --o SuConnectionPool
+    Session --> Wrapper: query()/update()/delete()
+    Wrapper --> Session: execute()
+```

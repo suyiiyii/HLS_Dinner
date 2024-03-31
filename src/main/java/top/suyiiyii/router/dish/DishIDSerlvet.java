@@ -50,6 +50,10 @@ public class DishIDSerlvet extends BaseHttpServlet {
         WebUtils.respWrite(resp, "删除成功");
     }
 
+    /**
+     * 在Session初始化后初始化dishDAO
+     * 通过路径获取id
+     */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         super.service(req, resp, () -> {

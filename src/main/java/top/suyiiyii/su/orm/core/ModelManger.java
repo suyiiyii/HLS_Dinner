@@ -24,7 +24,13 @@ import java.util.concurrent.Callable;
 
 
 public class ModelManger {
+    /**
+     * 线程安全：对象在构造函数中初始化，次后只读，不涉及线程安全问题
+     */
     private final List<Table> tables = new ArrayList<>();
+    /**
+     * 几张映射表，用于快速查找对应的表的相关信息
+     */
     // 实体类到表名的映射
     private final Map<Class<?>, String> class2TableName = new HashMap<>();
     // 表名到实体类的映射
@@ -34,9 +40,6 @@ public class ModelManger {
     // 表名到表对象的映射
     private final Map<String, Table> tableName2Table = new HashMap<>();
     private final ConnectionManger connectionManger;
-    /**
-     * 线程安全：对象在构造函数中初始化，次后只读，不涉及线程安全问题
-     */
     Log logger = LogFactory.getLog(ModelManger.class);
 
     /**
@@ -70,7 +73,7 @@ public class ModelManger {
      * @param tableName   表名
      * @param entityClass 实体类
      */
-    private void register(String tableName, Class<?> entityClass){
+    private void register(String tableName, Class<?> entityClass) {
         Table table = new Table(tableName, entityClass);
         class2TableName.put(entityClass, tableName);
         tableName2Class.put(tableName, entityClass);

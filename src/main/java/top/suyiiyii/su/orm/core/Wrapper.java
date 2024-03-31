@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  *
  * @author suyiiyii
  */
-public class Warpper {
+public class Wrapper {
     /**
      * 线程安全：对象仅作为session的工具类，线程安全同session
      */
@@ -39,7 +39,7 @@ public class Warpper {
      * @param clazz    要操作的表
      * @param callBack 回调函数
      */
-    public Warpper(Class<?> clazz, CallBack callBack) {
+    public Wrapper(Class<?> clazz, CallBack callBack) {
         this.clazz = clazz;
         this.callBack = callBack;
     }
@@ -61,7 +61,7 @@ public class Warpper {
      * @param value 值
      * @return this
      */
-    public Warpper eq(String key, Object value) {
+    public Wrapper eq(String key, Object value) {
         whereStatement.add('`' + key + '`' + " = ?");
         params.add(value);
         return this;
@@ -74,7 +74,7 @@ public class Warpper {
      * @param value 值
      * @return this
      */
-    public Warpper neq(String key, Object value) {
+    public Wrapper neq(String key, Object value) {
         whereStatement.add('`' + key + '`' + " != ?");
         params.add(value);
         return this;
@@ -87,7 +87,7 @@ public class Warpper {
      * @param value 值
      * @return this
      */
-    public Warpper like(String key, Object value) {
+    public Wrapper like(String key, Object value) {
         whereStatement.add('`' + key + '`' + " LIKE ?");
         params.add(value);
         return this;
@@ -101,7 +101,7 @@ public class Warpper {
      * @param value 值
      * @return this
      */
-    public Warpper fuzzLike(String key, String value) {
+    public Wrapper fuzzLike(String key, String value) {
         whereStatement.add('`' + key + '`' + " LIKE ?");
         params.add("%" + value + "%");
         return this;
@@ -114,7 +114,7 @@ public class Warpper {
      * @param pageSize 每页数量
      * @return this
      */
-    public Warpper limit(int pageNum, int pageSize) {
+    public Wrapper limit(int pageNum, int pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         return this;
@@ -127,7 +127,7 @@ public class Warpper {
      * @param value 值
      * @return this
      */
-    public Warpper set(String key, Object value) {
+    public Wrapper set(String key, Object value) {
         setStatement.add('`' + key + '`' + " = ?");
         params.add(value);
         return this;

@@ -127,6 +127,7 @@ public class TableService {
         // 检查是否已存在同样的name
         try {
             getTableByName(name);
+            //PROBLEM 没有查询到数据，应该是返回null还是抛出异常？
         } catch (RuntimeException e) {
             isExist = true;
         }
