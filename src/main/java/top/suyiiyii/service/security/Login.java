@@ -38,6 +38,16 @@ public class Login {
         return tokenData;
     }
 
+    public static void changePassword(Session db,int uid,String oldPassword, String newPassword) {
+        UsersDAO usersDAO = new UsersImpl(db);
+        User user = usersDAO.getUserById(uid);
+        if (!checkPassword(oldPassword, user)) {
+            throw new UserAuthenticationException("原密码错误");
+        }
+        user.password = hashPassword(newPassword);
+        usersDAO.updateUser(user);
+    }
+
     public static boolean checkPassword(String password, User user) {
         return user.password.equals(hashPassword(password));
     }

@@ -135,4 +135,28 @@ public class UniversalUtils {
         }
         return true;
     }
+
+    /**
+     * 使用反射，用新对象的非空属性更新旧对象的对应属性
+     */
+    public static void updateObj(Object oldObj, Object newObj) {
+        try {
+            Field[] fields = oldObj.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object value = field.get(newObj);
+                //判断是不是null
+                if (value == null) {
+                    continue;
+                }
+                //判断是不是0
+                if (field.getType().equals(int.class) && (int) value == 0) {
+                    continue;
+                }
+                field.set(oldObj, value);
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

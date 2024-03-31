@@ -114,7 +114,9 @@ public class Session {
             checkUpdate();
         }
         // 提交事务
-        sqlExecutor.commit();
+        if (!sqlExecutor.isAutoCommit()) {
+            sqlExecutor.commit();
+        }
     }
 
 
@@ -345,5 +347,41 @@ public class Session {
      */
     public void close() {
         sqlExecutor.close();
+    }
+
+    /**
+     * 开启事务
+     */
+    public void beginTransaction() {
+        try {
+            sqlExecutor.setAutoCommit(false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 提交事务
+     */
+    public void commitTransaction() {
+        try {
+            this.commit();
+            sqlExecutor.commit();
+            sqlExecutor.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 回滚事务
+     */
+    public void rollbackTransaction() {
+        try {
+            sqlExecutor.rollback();
+            sqlExecutor.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

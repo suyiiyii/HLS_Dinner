@@ -3,6 +3,7 @@ package top.suyiiyii.service;
 import top.suyiiyii.dao.TablesDAO;
 import top.suyiiyii.dao.TablesImpl;
 import top.suyiiyii.models.Table;
+import top.suyiiyii.su.UniversalUtils;
 import top.suyiiyii.su.orm.core.Session;
 
 import java.util.List;
@@ -148,26 +149,8 @@ public class TableService {
         }
         // 更新表
         Table oldTable = getTableById(table.id);
-        if (table.name == null) {
-            table.name = oldTable.name;
-        }
-        if (table.description == null) {
-            table.description = oldTable.description;
-        }
-        if (table.status == null) {
-            table.status = oldTable.status;
-        }
-        if (table.registerTime == -1) {
-            table.registerTime = oldTable.registerTime;
-        }
-        if (table.uid == -1) {
-            table.uid = oldTable.uid;
-        }
-        if (table.imgUrl == null) {
-            table.imgUrl = oldTable.imgUrl;
-        }
-        // TODO: 添加使用反射，用一个对象的非空属性更新另一个对象
-        tablesDAO.updateTable(table);
+        UniversalUtils.updateObj(oldTable, table);
+        tablesDAO.updateTable(oldTable);
     }
 
     /**

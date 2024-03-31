@@ -17,6 +17,8 @@ public interface UsersDAO extends BaseDAO {
 
     User createUser(User user);
 
+    void updateUser(User user);
+
 //    void updateUser(User user);
 //
 //    void deleteUser(int id);

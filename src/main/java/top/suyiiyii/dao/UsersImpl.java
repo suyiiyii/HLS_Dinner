@@ -77,4 +77,13 @@ public class UsersImpl extends BaseImpl implements UsersDAO {
         }
         return user;
     }
+
+    @Override
+    public void updateUser(User user) {
+        try {
+            db.update(user);
+        } catch (Exception e) {
+            logger.warn(e);
+        }
+    }
 }

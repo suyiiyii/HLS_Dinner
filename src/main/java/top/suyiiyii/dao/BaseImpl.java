@@ -13,30 +13,16 @@ public class BaseImpl implements BaseDAO {
 
     @Override
     public void beginTransaction() {
-        try {
-            db.setAutoCommit(false);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        db.beginTransaction();
     }
 
     @Override
     public void commitTransaction() {
-        try {
-            db.commit();
-            db.setAutoCommit(true);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        db.commitTransaction();
     }
 
     @Override
     public void rollbackTransaction() {
-        try {
-            db.rollback();
-            db.setAutoCommit(true);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        db.rollbackTransaction();
     }
 }
