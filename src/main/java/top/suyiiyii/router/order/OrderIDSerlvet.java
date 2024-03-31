@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /**
  * 查询单个订单
+ * 订单不支持更改，只有查询单个订单的接口
  *
  * @author suyiiyii
  */
@@ -23,26 +24,6 @@ public class OrderIDSerlvet extends BaseHttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WebUtils.respWrite(resp, orderService.getOrderRespById(id));
-    }
-
-    /**
-     * 部分更新菜品信息
-     */
-    @Override
-    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        // 先获取原来的菜品信息
-//        Dish oldDish = dishDAO.getDish(id);
-//        Dish newDish = WebUtils.readRequestBody2Obj(req, Dish.class);
-//        newDish.id = id;
-//        // 用新菜品信息来更新原来的菜品信息
-//        UniversalUtils.updateObj(oldDish, newDish);
-//        dishDAO.updateDish(oldDish);
-//        WebUtils.respWrite(resp, oldDish);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        dishDAO.deleteDish(id);
     }
 
     @Override

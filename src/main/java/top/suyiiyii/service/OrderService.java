@@ -78,6 +78,7 @@ public class OrderService {
             dish.dish_price = orderItem.price;
             dish.dish_total_price = orderItem.price * orderItem.quantity;
             orderResp.total_price += dish.dish_total_price;
+            //PROBLEM 总金额应该是前端计算的还是后端计算的？
             orderResp.dish.add(dish);
         }
         // 菜品的名字还不知道，还要到数据库去查
