@@ -16,6 +16,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 有关订单的业务逻辑
+ * 订单业务逻辑很复杂，感觉加了ORM后DAO没啥存在的必要，就只是转发请求，所以这里就直接调用数据库了
+ * //PROBLEM
+ * <p>
+ * 订单不需要删除
+ * 但是下订单要减商品库存
  *
  * @author suyiiyii
  */
@@ -92,6 +97,8 @@ public class OrderService {
 
     /**
      * 创建订单
+     * 需要检查用户有没有订桌子
+     * 需要检查库存
      *
      * @param uid    用户id
      * @param dishes 菜品编号和数量的映射
@@ -150,6 +157,14 @@ public class OrderService {
         }
     }
 
+    /**
+     * 获取某个用户的所有订单
+     * 如果uid为0则获取所有订单
+     * //PROBLEM 这个拿到订单信息，再去查菜品信息，这个逻辑是不是应该是在前端做的？
+     *
+     * @param uid 用户id
+     * @return 订单列表
+     */
     public List<OrderResp> getAllOrder(int uid) {
         List<Order> orders;
         try {
