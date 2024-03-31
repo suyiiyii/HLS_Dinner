@@ -123,7 +123,7 @@ public class UniversalUtils {
                 field.setAccessible(true);
                 Object obj1 = field.get(x);
                 Object obj2 = field.get(y);
-                if (obj1 == null && obj2 == null) {
+                if (obj1 == null || obj2 == null) {
                     return false;
                 }
                 if (!obj1.equals(obj2)) {
