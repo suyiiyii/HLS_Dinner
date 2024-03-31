@@ -6,6 +6,13 @@ import top.suyiiyii.su.orm.core.Session;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 菜品数据访问DAO
+ * 由于只有管理员可以操作菜品，所以不需要对菜品进行权限控制
+ * 所以懒得写Service了
+ * servlet直接调用DAO
+ * //PROBLEM
+ */
 public class DishImpl extends BaseImpl implements DishDAO {
     public DishImpl(Session db) {
         super(db);

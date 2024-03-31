@@ -83,7 +83,7 @@ public class TableIDServlet extends BaseHttpServlet {
     /**
      * 更新一张桌子
      * 管理员请求将会直接操作数据库
-     * 用户请求将会根据表的状态进行操作
+     * 用户请求将会根据桌子的状态进行操作
      *
      * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
@@ -121,6 +121,15 @@ public class TableIDServlet extends BaseHttpServlet {
         WebUtils.respWrite(resp, table);
     }
 
+    /**
+     * 在service方法中初始化tableService
+     * 在处理请求前获取id
+     *
+     * @param req  the {@link HttpServletRequest} object that contains the request the client made of the servlet
+     * @param resp the {@link HttpServletResponse} object that contains the response the servlet returns to the client
+     * @throws IOException      if an input or output error is detected when the servlet handles the PATCH request
+     * @throws ServletException if the request for the PATCH cannot be handled
+     */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         super.service(req, resp, () -> {

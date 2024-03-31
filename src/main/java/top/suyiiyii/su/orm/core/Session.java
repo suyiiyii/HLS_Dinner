@@ -256,14 +256,14 @@ public class Session {
      * @param <T>   要查询的对象的类型
      * @return 查询结果（具体类型取决于链式调用最后执行的方法）
      */
-    public <T> Warpper query(Class<T> clazz) {
-        return new Warpper(clazz, warpper -> {
-            String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("SELECT * FROM `" + tableName + "` ");
+    public <T> Wrapper query(Class<T> clazz) {
+        return new Wrapper(clazz, wrapper -> {
+            String tableName = modelManger.getClass2TableName().get(wrapper.getClazz());
+            String sql = wrapper.buildSql("SELECT * FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
-            ps = warpper.fillParams(ps);
+            ps = wrapper.fillParams(ps);
             ResultSet rs = sqlExecutor.query(ps);
-            List<T> list = (List<T>) SuRowMapper.rowMapper(warpper.getClazz(), rs);
+            List<T> list = (List<T>) SuRowMapper.rowMapper(wrapper.getClazz(), rs);
             for (T obj : list) {
                 cache.put(obj, UniversalUtils.clone(obj));
             }
@@ -281,12 +281,12 @@ public class Session {
      * @return 查询结果（具体类型取决于链式调用最后执行的方法）
      */
 
-    public <T> Warpper delete(Class<T> clazz) {
-        return new Warpper(clazz, warpper -> {
-            String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("DELETE FROM `" + tableName + "` ");
+    public <T> Wrapper delete(Class<T> clazz) {
+        return new Wrapper(clazz, wrapper -> {
+            String tableName = modelManger.getClass2TableName().get(wrapper.getClazz());
+            String sql = wrapper.buildSql("DELETE FROM `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
-            ps = warpper.fillParams(ps);
+            ps = wrapper.fillParams(ps);
             return sqlExecutor.execute(ps);
         });
     }
@@ -300,12 +300,12 @@ public class Session {
      * @param <T>   要查询的对象的类型
      * @return 查询结果（具体类型取决于链式调用最后执行的方法）
      */
-    public <T> Warpper update(Class<T> clazz) {
-        return new Warpper(clazz, warpper -> {
-            String tableName = modelManger.getClass2TableName().get(warpper.getClazz());
-            String sql = warpper.buildSql("UPDATE `" + tableName + "` ");
+    public <T> Wrapper update(Class<T> clazz) {
+        return new Wrapper(clazz, wrapper -> {
+            String tableName = modelManger.getClass2TableName().get(wrapper.getClazz());
+            String sql = wrapper.buildSql("UPDATE `" + tableName + "` ");
             PreparedStatement ps = sqlExecutor.getPreparedStatement(sql);
-            ps = warpper.fillParams(ps);
+            ps = wrapper.fillParams(ps);
             return sqlExecutor.execute(ps);
         });
     }
