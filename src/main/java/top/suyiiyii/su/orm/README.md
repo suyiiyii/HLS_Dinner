@@ -29,7 +29,6 @@
     2. 新建`ModelManger`类，传入待扫描的包和`ConnectionBuilder`的`getConnection`方法
 
         ```java
-       
          ConnectionBuilder builder = new ConnectionBuilder(url, user, password);
  
          ModelManger modelManger = new ModelManger("top.suyiiyii.router.models", builder::getConnection);

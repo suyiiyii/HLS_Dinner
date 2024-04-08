@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import top.suyiiyii.schemas.TokenData;
 import top.suyiiyii.su.ConfigManger;
 import top.suyiiyii.su.orm.core.ModelManger;
@@ -24,6 +26,7 @@ public class BaseHttpServlet extends HttpServlet {
     protected int uid = -1;
     protected String role = "guest";
     protected int statusCode = 0;
+    protected Log logger;
 
     /**
      * 依赖注入
@@ -46,6 +49,7 @@ public class BaseHttpServlet extends HttpServlet {
             }
         } finally {
             db.close();
+            logger.info("db归还成功");
             req.setAttribute("statusCode", statusCode);
         }
     }
@@ -55,6 +59,7 @@ public class BaseHttpServlet extends HttpServlet {
      * 功能同上
      * 为了解决依赖注入的顺序问题，提供回调函数接口，在上层依赖注入后再注入下层依赖
      * //PROBLEM 这里遇到了依赖注入的顺序问题，如果在service方法中注入，会导致在doPatch方法中无法使用db，所以提供了回调函数接口，有更好的解决方法吗？
+     *
      * @param req      the {@link HttpServletRequest} object that contains the request the client made of the servlet
      * @param resp     the {@link HttpServletResponse} object that contains the response the servlet returns to the client
      * @param callable the {@link Runnable} object that contains the code to be executed
@@ -77,12 +82,15 @@ public class BaseHttpServlet extends HttpServlet {
             }
         } finally {
             db.close();
+            logger.info("db归还成功");
             req.setAttribute("statusCode", statusCode);
         }
     }
 
     private void inject(HttpServletRequest req) {
+        logger = LogFactory.getLog(this.getClass());
         ServletConfig config = getServletConfig();
+        logger.info("开始获取数据库连接");
         this.db = ((ModelManger) config.getServletContext().getAttribute("ModelManger")).getSession();
         this.configManger = (ConfigManger) config.getServletContext().getAttribute("ConfigManger");
         TokenData tokenData = (TokenData) req.getAttribute("tokenData");
