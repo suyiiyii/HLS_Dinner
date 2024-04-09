@@ -15,27 +15,31 @@ public class RedissionLock {
     public static RLock lock;
     protected static Log logger = LogFactory.getLog(RedissionLock.class);
     private static String password;
+    private static String url;
 
-    static {
+    public static void init() {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://redis.k8s-redis.svc.cluster.local:6379");
 
         ConfigManger configManger = new ConfigManger("application.properties");
-        // 如果没有配置密码，就不使用分布式锁
+        // 如果没有配置url，就不使用分布式锁
         try {
+            url = configManger.get("REDIS_URL");
             password = configManger.get("REDIS_PASSWORD");
-        } catch (Exception e) {
-            password = null;
-        }
-        if (password != null) {
+            config.useSingleServer().setAddress(url);
             config.useSingleServer().setPassword(password);
+        } catch (Exception e) {
+            url = null;
         }
-        RedissonClient redisson = Redisson.create(config);
-        lock = redisson.getLock("lock");
+        if (url != null) {
+            logger.info("开始连接Redis");
+            RedissonClient redisson = Redisson.create(config);
+            lock = redisson.getLock("dinner");
+            logger.info("成功连接Redis");
+        }
     }
 
     public static void lock() {
-        if (password != null) {
+        if (url != null) {
             logger.info("尝试获取锁");
             lock.lock(5, TimeUnit.SECONDS);
             logger.info("成功获取锁");
@@ -43,7 +47,7 @@ public class RedissionLock {
     }
 
     public static void unlock() {
-        if (password != null) {
+        if (url != null) {
             lock.unlock();
             logger.info("成功释放锁");
         }
