@@ -6,6 +6,7 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import top.suyiiyii.service.RedissionLock;
 import top.suyiiyii.su.ConfigManger;
 import top.suyiiyii.su.orm.core.ModelManger;
 import top.suyiiyii.su.orm.utils.ConnectionBuilder;
@@ -39,6 +40,8 @@ public class ContextInitializer implements ServletContextListener {
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("ModelManger", modelManger);
         servletContext.setAttribute("ConfigManger", configManger);
+
+        RedissionLock.init();
         logger.info("依赖注入完成");
     }
 }

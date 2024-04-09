@@ -116,8 +116,10 @@ public class SuConnectionPool implements ConnectionPool {
         try {
             lock.lock();
             if (usedConnections.contains(conn)) {
+                logger.info("收到连接归还，当前 available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
                 usedConnections.remove(conn);
                 availableConnections.add(conn);
+                logger.info("成功归还连接，当前 available: %d, used: %d".formatted(availableConnections.size(), usedConnections.size()));
                 // 唤醒等待连接的线程，重新平衡连接池
                 waitConnection.signalAll();
                 waitBalance.signalAll();
