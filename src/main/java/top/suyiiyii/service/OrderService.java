@@ -119,6 +119,7 @@ public class OrderService {
             throw new RuntimeException("用户没有订桌子");
         }
         lock.lock();
+        RedissionLock.lock();
         db.beginTransaction();
         // 麻了，暴力查吧
         try {
@@ -154,6 +155,7 @@ public class OrderService {
             db.rollbackTransaction();
             throw new RuntimeException(e);
         } finally {
+            RedissionLock.unlock();
             lock.unlock();
         }
     }
