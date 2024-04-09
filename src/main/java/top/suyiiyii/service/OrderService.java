@@ -140,6 +140,9 @@ public class OrderService {
                 orderItem.quantity = entry.getValue();
                 Dish dish = db.query(Dish.class).eq("id", entry.getKey()).first();
                 orderItem.price = dish.price;
+                if (entry.getValue()<0){
+                    throw new RuntimeException("数量不能为负数");
+                }
                 totalPrice += dish.price * entry.getValue();
                 db.insert(orderItem);
                 // 减库存
