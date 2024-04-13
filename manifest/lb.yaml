@@ -9,51 +9,6 @@ metadata:
   creationTimestamp: '2024-04-08T13:48:07Z'
   finalizers:
     - service.kubernetes.io/load-balancer-cleanup
-  managedFields:
-    - apiVersion: v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:finalizers:
-            .: {}
-            v:"service.kubernetes.io/load-balancer-cleanup": {}
-        f:status:
-          f:loadBalancer:
-            f:ingress: {}
-      manager: k3s
-      operation: Update
-      subresource: status
-      time: '2024-04-08T13:48:08Z'
-    - apiVersion: v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:annotations:
-            .: {}
-            f:field.cattle.io/publicEndpoints: {}
-            f:field.cattle.io/targetWorkloadIds: {}
-            f:management.cattle.io/ui-managed: {}
-          f:ownerReferences:
-            .: {}
-            k:{"uid":"f603b3b8-480b-4c08-8518-aabe4938fd99"}: {}
-        f:spec:
-          f:allocateLoadBalancerNodePorts: {}
-          f:externalTrafficPolicy: {}
-          f:internalTrafficPolicy: {}
-          f:ports:
-            .: {}
-            k:{"port":8080,"protocol":"TCP"}:
-              .: {}
-              f:name: {}
-              f:port: {}
-              f:protocol: {}
-              f:targetPort: {}
-          f:selector: {}
-          f:sessionAffinity: {}
-          f:type: {}
-      manager: rancher
-      operation: Update
-      time: '2024-04-08T13:48:08Z'
   name: hls-dinner-loadbalancer
   namespace: default
   ownerReferences:

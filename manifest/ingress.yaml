@@ -6,30 +6,6 @@ metadata:
       [{"addresses":["192.168.68.13"],"port":80,"protocol":"HTTP","serviceName":"default:hls-dinner","ingressName":"default:dinner-ingress","hostname":"dinner.api.99.suyiiyii.top","path":"/","allNodes":false}]
   creationTimestamp: '2024-04-08T15:49:02Z'
   generation: 1
-  managedFields:
-    - apiVersion: networking.k8s.io/v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:annotations:
-            .: {}
-            f:field.cattle.io/publicEndpoints: {}
-        f:spec:
-          f:ingressClassName: {}
-          f:rules: {}
-      manager: rancher
-      operation: Update
-      time: '2024-04-08T15:49:02Z'
-    - apiVersion: networking.k8s.io/v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:status:
-          f:loadBalancer:
-            f:ingress: {}
-      manager: traefik
-      operation: Update
-      subresource: status
-      time: '2024-04-08T15:49:02Z'
   name: dinner-ingress
   namespace: default
   resourceVersion: '47416'
