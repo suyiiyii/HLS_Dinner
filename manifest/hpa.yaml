@@ -1,0 +1,133 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  creationTimestamp: '2024-04-08T14:40:05Z'
+  managedFields:
+    - apiVersion: autoscaling/v2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:behavior:
+            .: {}
+            f:scaleDown:
+              .: {}
+              f:policies: {}
+              f:selectPolicy: {}
+              f:stabilizationWindowSeconds: {}
+            f:scaleUp:
+              .: {}
+              f:policies: {}
+              f:selectPolicy: {}
+              f:stabilizationWindowSeconds: {}
+          f:maxReplicas: {}
+          f:metrics: {}
+          f:minReplicas: {}
+          f:scaleTargetRef:
+            f:apiVersion: {}
+            f:kind: {}
+            f:name: {}
+      manager: rancher
+      operation: Update
+      time: '2024-04-09T09:49:01Z'
+    - apiVersion: autoscaling/v2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            .: {}
+            k:{"type":"AbleToScale"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"ScalingActive"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"ScalingLimited"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:currentMetrics: {}
+          f:currentReplicas: {}
+          f:desiredReplicas: {}
+          f:lastScaleTime: {}
+      manager: k3s
+      operation: Update
+      subresource: status
+      time: '2024-04-13T10:22:32Z'
+  name: hld-dinner-hpa
+  namespace: default
+  resourceVersion: '1134809'
+  uid: 5cc511c3-b868-4b47-b0ce-ee259eeee22b
+spec:
+  behavior:
+    scaleDown:
+      policies:
+        - periodSeconds: 15
+          type: Percent
+          value: 100
+      selectPolicy: Max
+      stabilizationWindowSeconds: 600
+    scaleUp:
+      policies:
+        - periodSeconds: 5
+          type: Pods
+          value: 4
+        - periodSeconds: 5
+          type: Percent
+          value: 1000
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+  maxReplicas: 50
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hls-dinner
+status:
+  conditions:
+    - lastTransitionTime: '2024-04-08T14:40:20Z'
+      message: >-
+        recent recommendations were higher than current one, applying the
+        highest recent recommendation
+      reason: ScaleDownStabilized
+      status: 'True'
+      type: AbleToScale
+    - lastTransitionTime: '2024-04-13T09:55:45Z'
+      message: >-
+        the HPA was able to successfully calculate a replica count from cpu
+        resource utilization (percentage of request)
+      reason: ValidMetricFound
+      status: 'True'
+      type: ScalingActive
+    - lastTransitionTime: '2024-04-12T02:09:09Z'
+      message: the desired replica count is less than the minimum replica count
+      reason: TooFewReplicas
+      status: 'True'
+      type: ScalingLimited
+  currentMetrics:
+    - resource:
+        current:
+          averageUtilization: 0
+          averageValue: 2m
+        name: cpu
+      type: Resource
+  currentReplicas: 3
+  desiredReplicas: 3
+  lastScaleTime: '2024-04-12T02:08:54Z'

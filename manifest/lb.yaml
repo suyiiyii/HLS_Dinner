@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: >-
+      [{"addresses":["192.168.68.13"],"port":8080,"protocol":"TCP","serviceName":"default:hls-dinner-loadbalancer","allNodes":false}]
+    field.cattle.io/targetWorkloadIds: '["default/hls-dinner"]'
+    management.cattle.io/ui-managed: 'true'
+  creationTimestamp: '2024-04-08T13:48:07Z'
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"service.kubernetes.io/load-balancer-cleanup": {}
+        f:status:
+          f:loadBalancer:
+            f:ingress: {}
+      manager: k3s
+      operation: Update
+      subresource: status
+      time: '2024-04-08T13:48:08Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:field.cattle.io/publicEndpoints: {}
+            f:field.cattle.io/targetWorkloadIds: {}
+            f:management.cattle.io/ui-managed: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"f603b3b8-480b-4c08-8518-aabe4938fd99"}: {}
+        f:spec:
+          f:allocateLoadBalancerNodePorts: {}
+          f:externalTrafficPolicy: {}
+          f:internalTrafficPolicy: {}
+          f:ports:
+            .: {}
+            k:{"port":8080,"protocol":"TCP"}:
+              .: {}
+              f:name: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector: {}
+          f:sessionAffinity: {}
+          f:type: {}
+      manager: rancher
+      operation: Update
+      time: '2024-04-08T13:48:08Z'
+  name: hls-dinner-loadbalancer
+  namespace: default
+  ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: Deployment
+      name: hls-dinner
+      uid: f603b3b8-480b-4c08-8518-aabe4938fd99
+  resourceVersion: '22433'
+  uid: 2e25ff26-b6ac-4f1f-981d-9de769d20a5c
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.43.133.171
+  clusterIPs:
+    - 10.43.133.171
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: hls-dinner-lb
+      nodePort: 31934
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.deployment-default-hls-dinner
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+      - ip: 192.168.68.13

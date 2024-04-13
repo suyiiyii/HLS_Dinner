@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: >-
+      [{"addresses":["192.168.68.13"],"port":80,"protocol":"HTTP","serviceName":"default:hls-dinner","ingressName":"default:dinner-ingress","hostname":"dinner.api.99.suyiiyii.top","path":"/","allNodes":false}]
+  creationTimestamp: '2024-04-08T15:49:02Z'
+  generation: 1
+  managedFields:
+    - apiVersion: networking.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:field.cattle.io/publicEndpoints: {}
+        f:spec:
+          f:ingressClassName: {}
+          f:rules: {}
+      manager: rancher
+      operation: Update
+      time: '2024-04-08T15:49:02Z'
+    - apiVersion: networking.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:loadBalancer:
+            f:ingress: {}
+      manager: traefik
+      operation: Update
+      subresource: status
+      time: '2024-04-08T15:49:02Z'
+  name: dinner-ingress
+  namespace: default
+  resourceVersion: '47416'
+  uid: 79c6ef9c-2ef6-47b6-9bc4-4bd65158e050
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: dinner.api.99.suyiiyii.top
+      http:
+        paths:
+          - backend:
+              service:
+                name: hls-dinner
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+      - ip: 192.168.68.13
