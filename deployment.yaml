@@ -1,0 +1,273 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '19'
+    field.cattle.io/publicEndpoints: >-
+      [{"addresses":["192.168.68.13"],"port":8080,"protocol":"TCP","serviceName":"default:hls-dinner-loadbalancer","allNodes":false},{"addresses":["192.168.68.13"],"port":80,"protocol":"HTTP","serviceName":"default:hls-dinner","ingressName":"default:dinner-ingress","hostname":"dinner.api.99.suyiiyii.top","path":"/","allNodes":false}]
+  creationTimestamp: '2024-04-08T13:48:07Z'
+  generation: 135
+  labels:
+    k8slens-edit-resource-version: v1
+    workload.user.cattle.io/workloadselector: apps.deployment-default-hls-dinner
+  managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:replicas: {}
+      manager: k3s
+      operation: Update
+      subresource: scale
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            f:k8slens-edit-resource-version: {}
+      manager: node-fetch
+      operation: Update
+      time: '2024-04-09T03:00:40Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:field.cattle.io/publicEndpoints: {}
+          f:labels:
+            .: {}
+            f:workload.user.cattle.io/workloadselector: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:revisionHistoryLimit: {}
+          f:selector: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:annotations:
+                .: {}
+                f:cattle.io/timestamp: {}
+              f:labels:
+                .: {}
+                f:workload.user.cattle.io/workloadselector: {}
+              f:namespace: {}
+            f:spec:
+              f:containers:
+                k:{"name":"container-0"}:
+                  .: {}
+                  f:env:
+                    .: {}
+                    k:{"name":"JDBC_PASSWORD"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                    k:{"name":"JDBC_URL"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                    k:{"name":"JDBC_USER"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                    k:{"name":"REDIS_PASSWORD"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                    k:{"name":"REDIS_URL"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                    k:{"name":"SECRET"}:
+                      .: {}
+                      f:name: {}
+                      f:valueFrom:
+                        .: {}
+                        f:secretKeyRef: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":8080,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:name: {}
+                      f:protocol: {}
+                  f:resources:
+                    .: {}
+                    f:limits:
+                      .: {}
+                      f:cpu: {}
+                      f:memory: {}
+                  f:securityContext:
+                    .: {}
+                    f:allowPrivilegeEscalation: {}
+                    f:privileged: {}
+                    f:readOnlyRootFilesystem: {}
+                    f:runAsNonRoot: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: rancher
+      operation: Update
+      time: '2024-04-13T09:54:21Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: k3s
+      operation: Update
+      subresource: status
+      time: '2024-04-13T09:55:08Z'
+  name: hls-dinner
+  namespace: default
+  resourceVersion: '1127201'
+  uid: f603b3b8-480b-4c08-8518-aabe4938fd99
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.deployment-default-hls-dinner
+  strategy:
+    rollingUpdate:
+      maxSurge: 100
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: '2024-04-13T09:54:25Z'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: apps.deployment-default-hls-dinner
+      namespace: default
+    spec:
+      containers:
+        - env:
+            - name: JDBC_URL
+              valueFrom:
+                secretKeyRef:
+                  key: JDBC_URL
+                  name: application-properties
+                  optional: false
+            - name: JDBC_USER
+              valueFrom:
+                secretKeyRef:
+                  key: JDBC_USER
+                  name: application-properties
+                  optional: false
+            - name: JDBC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: JDBC_PASSWORD
+                  name: application-properties
+                  optional: false
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: SECRET
+                  name: application-properties
+                  optional: false
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: REDIS_PASSWORD
+                  name: application-properties
+                  optional: false
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  key: REDIS_URL
+                  name: application-properties
+                  optional: false
+          image: >-
+            registry.cn-shenzhen.aliyuncs.com/suyiiyii/hls_dinner:2024-04-09-20-21-05
+          imagePullPolicy: Always
+          name: container-0
+          ports:
+            - containerPort: 8080
+              name: hls-dinner-lb
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 3
+  conditions:
+    - lastTransitionTime: '2024-04-12T01:58:41Z'
+      lastUpdateTime: '2024-04-12T01:58:41Z'
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2024-04-08T13:48:07Z'
+      lastUpdateTime: '2024-04-13T09:55:08Z'
+      message: ReplicaSet "hls-dinner-69f6d9b87c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: 'True'
+      type: Progressing
+  observedGeneration: 135
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
