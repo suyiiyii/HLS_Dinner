@@ -1,3 +1,6 @@
+# Tips
+该项目为参与校内工作室的考核项目
+
 # Servlet Learn Project
 
 ## Description
